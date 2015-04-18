@@ -29,7 +29,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CompositeVMTests.cs" />
+    <Compile Include="DataEditorsManagerTests.cs" />
+    <Compile Include="DataEditorsManager.cs" />
     <Compile Include="EditrableTargets\EditableStruct.cs" />
     <Compile Include="IDataEditor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
