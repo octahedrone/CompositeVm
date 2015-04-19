@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace Composite.Core.Tests
+namespace Composite.Core
 {
     public class DataEditorsManager<TData> : IEnumerable<IDataEditor<TData>>
     {

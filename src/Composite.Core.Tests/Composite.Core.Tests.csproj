@@ -30,17 +30,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataEditorsManagerTests.cs" />
-    <Compile Include="DataEditorsManager.cs" />
     <Compile Include="EditrableTargets\EditableStruct.cs" />
-    <Compile Include="IDataEditor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="$(SolutionDir)CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="PropertyUpdatedEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Composite.Core\Composite.Core.csproj">
+      <Project>{b38c58c0-7d28-494e-b66c-5d8e6cca7812}</Project>
+      <Name>Composite.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
