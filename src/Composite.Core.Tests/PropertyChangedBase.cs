@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Composite.Core
+namespace Composite.Core.Tests
 {
     public class PropertyChangedBase : INotifyPropertyChanged
     {
