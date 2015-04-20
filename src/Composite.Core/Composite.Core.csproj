@@ -19,11 +19,13 @@
   <ItemGroup>
     <Compile Include="DataEditorsManager.cs" />
     <Compile Include="IDataEditor.cs" />
+    <Compile Include="Validation\IValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="$(SolutionDir)CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="PropertyUpdatedEventArgs.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

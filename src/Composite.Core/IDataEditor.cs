@@ -8,4 +8,9 @@ namespace Composite.Core
 
         event EventHandler<PropertyUpdatedEventArgs> TargetUpdated;
     }
+
+    public interface IValidatedDataEditor<TData, in TValidationState> : IDataEditor<TData>
+    {
+        void UpdateValidationState(TValidationState state);
+    }
 }

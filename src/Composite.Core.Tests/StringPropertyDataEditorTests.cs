@@ -1,5 +1,7 @@
 ﻿using Composite.Core.Tests.EditrableTargets;
+using Composite.Core.Validation;
 using FluentAssertions;
+using NSubstitute;
 using NUnit.Framework;
 
 namespace Composite.Core.Tests
@@ -13,7 +15,9 @@ namespace Composite.Core.Tests
             var target = new EditableStruct {Text = "Initial"};
             var sut = new StringPropertyDataEditor<EditableStruct>(new TextPropertyAdapter());
 
-            var manager = new DataEditorsManager<EditableStruct>
+            var validator = CreateValidator();
+
+            var manager = new DataEditorsManager<EditableStruct, ValidationState>(validator)
             {
                 sut
             };
@@ -35,7 +39,9 @@ namespace Composite.Core.Tests
             var target = new EditableStruct {Text = "Initial"};
             var sut = new StringPropertyDataEditor<EditableStruct>(new TextPropertyAdapter());
 
-            var manager = new DataEditorsManager<EditableStruct>
+            var validator = CreateValidator();
+
+            var manager = new DataEditorsManager<EditableStruct, ValidationState>(validator)
             {
                 sut
             };
@@ -53,6 +59,14 @@ namespace Composite.Core.Tests
                 .WithArgs<PropertyUpdatedEventArgs>(args => args.PropertyName == "Text");
 
             manager.EditableTarget.Text.Should().Be(updatedValue);
+        }
+
+        private static IValidator<EditableStruct, ValidationState> CreateValidator()
+        {
+            var validator = Substitute.For<IValidator<EditableStruct, ValidationState>>();
+            validator.Validate(Arg.Any<EditableStruct>()).Returns(ValidationState.Valid);
+
+            return validator;
         }
     }
 }

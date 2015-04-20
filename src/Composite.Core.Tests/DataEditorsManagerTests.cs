@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Composite.Core.Tests.EditrableTargets;
+using Composite.Core.Validation;
 using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
@@ -9,7 +10,7 @@ namespace Composite.Core.Tests
     [TestFixture]
     public class DataEditorsManagerTests
     {
-        private DataEditorsManager<EditableStruct> _sut;
+        private DataEditorsManager<EditableStruct, ValidationState> _sut;
         private readonly IEqualityComparer<EditableStruct> _comparer = new TextEqualityComparer();
 
         [Test]
@@ -20,12 +21,14 @@ namespace Composite.Core.Tests
             var editorA = Substitute.For<IDataEditor<EditableStruct>>();
             var editorB = Substitute.For<IDataEditor<EditableStruct>>();
 
+            var validator = CreateValidator();
+
             // given
             _comparer.Equals(editorA.EditableTarget, target).Should().BeFalse();
             _comparer.Equals(editorB.EditableTarget, target).Should().BeFalse();
 
             // act
-            _sut = new DataEditorsManager<EditableStruct>
+            _sut = new DataEditorsManager<EditableStruct, ValidationState>(validator)
             {
                 EditableTarget = target
             };
@@ -39,6 +42,34 @@ namespace Composite.Core.Tests
         }
 
         [Test]
+        public void EditorsValidityStateIsInitializedAtInsertion()
+        {
+            var target = new EditableStruct {Text = "Initial"};
+
+            var editorA = Substitute.For<IDataEditor<EditableStruct>>();
+            var editorB = Substitute.For<IValidatedDataEditor<EditableStruct, ValidationState>>();
+
+            var state = ValidationState.Valid;
+            var validator = CreateValidator(state);
+
+            // given
+            _comparer.Equals(editorA.EditableTarget, target).Should().BeFalse();
+            _comparer.Equals(editorB.EditableTarget, target).Should().BeFalse();
+
+            // act
+            _sut = new DataEditorsManager<EditableStruct, ValidationState>(validator)
+            {
+                EditableTarget = target
+            };
+
+            _sut.Add(editorA);
+            _sut.Add(editorB);
+
+            // assert
+            editorB.Received().UpdateValidationState(state);
+        }
+
+        [Test]
         public void EditorsTargetIsUpdatedWhenManagersIsUpdated()
         {
             var target = new EditableStruct {Text = "Initial"};
@@ -46,7 +77,9 @@ namespace Composite.Core.Tests
             var editorA = Substitute.For<IDataEditor<EditableStruct>>();
             var editorB = Substitute.For<IDataEditor<EditableStruct>>();
 
-            _sut = new DataEditorsManager<EditableStruct>
+            var validator = CreateValidator();
+
+            _sut = new DataEditorsManager<EditableStruct, ValidationState>(validator)
             {
                 editorA,
                 editorB
@@ -65,6 +98,30 @@ namespace Composite.Core.Tests
         }
 
         [Test]
+        public void EditorsValidityStateIsUpdatedWhenManagersTargetIsUpdated()
+        {
+            var target = new EditableStruct {Text = "Initial"};
+
+            var editorA = Substitute.For<IDataEditor<EditableStruct>>();
+            var editorB = Substitute.For<IValidatedDataEditor<EditableStruct, ValidationState>>();
+
+            var state = ValidationState.Valid;
+            var validator = CreateValidator(state);
+
+            _sut = new DataEditorsManager<EditableStruct, ValidationState>(validator)
+            {
+                editorA,
+                editorB
+            };
+
+            // act
+            _sut.EditableTarget = target;
+
+            // assert
+            editorB.Received().UpdateValidationState(state);
+        }
+
+        [Test]
         public void AllEditorsTargetsAreSynchronizedOnSingleEditorUpdate()
         {
             var target = new EditableStruct {Text = "Initial"};
@@ -72,7 +129,9 @@ namespace Composite.Core.Tests
             var editorA = Substitute.For<IDataEditor<EditableStruct>>();
             var editorB = Substitute.For<IDataEditor<EditableStruct>>();
 
-            _sut = new DataEditorsManager<EditableStruct>
+            var validator = CreateValidator();
+
+            _sut = new DataEditorsManager<EditableStruct, ValidationState>(validator)
             {
                 editorA,
                 editorB
@@ -93,14 +152,49 @@ namespace Composite.Core.Tests
         }
 
         [Test]
+        public void ValidatedEditorsValidationStateIsUpdatedOnSingleEditorUpdate()
+        {
+            var target = new EditableStruct {Text = "Initial"};
+
+            var editorA = Substitute.For<IDataEditor<EditableStruct>>();
+            var editorB = Substitute.For<IValidatedDataEditor<EditableStruct, ValidationState>>();
+
+            var state = ValidationState.Valid;
+            var validator = CreateValidator(state);
+
+            _sut = new DataEditorsManager<EditableStruct, ValidationState>(validator)
+            {
+                editorA,
+                editorB
+            };
+
+            _sut.EditableTarget = target;
+
+            // act
+            editorB.ClearReceivedCalls();
+
+            var updatedTarget = new EditableStruct { Text = "Updated" };
+            editorB.EditableTarget = updatedTarget;
+
+            var args = new PropertyUpdatedEventArgs("Text");
+            editorB.TargetUpdated += Raise.EventWith(args);
+
+            // assert
+            editorB.Received().UpdateValidationState(state);
+        }
+
+        [Test]
         public void RemovedEditorIsManagedNoMore()
         {
             var target = new EditableStruct {Text = "Initial"};
 
             var editorA = Substitute.For<IDataEditor<EditableStruct>>();
-            var editorB = Substitute.For<IDataEditor<EditableStruct>>();
+            var editorB = Substitute.For<IValidatedDataEditor<EditableStruct, ValidationState>>();
 
-            _sut = new DataEditorsManager<EditableStruct>
+            var state = ValidationState.Valid;
+            var validator = CreateValidator(state);
+
+            _sut = new DataEditorsManager<EditableStruct, ValidationState>(validator)
             {
                 editorA,
                 editorB
@@ -112,6 +206,7 @@ namespace Composite.Core.Tests
             var updatedTarget = new EditableStruct { Text = "Updated" };
 
             _sut.Remove(editorB);
+            editorB.ClearReceivedCalls();
 
             _sut.EditableTarget = updatedTarget;
 
@@ -121,6 +216,21 @@ namespace Composite.Core.Tests
             // assert
             _comparer.Equals(editorB.EditableTarget, target).Should().BeTrue();
             _comparer.Equals(_sut.EditableTarget, updatedTarget).Should().BeTrue();
+
+            editorB.DidNotReceiveWithAnyArgs().UpdateValidationState(state);
+        }
+
+        private static IValidator<EditableStruct, ValidationState> CreateValidator()
+        {
+            return CreateValidator(ValidationState.Valid);
+        }
+
+        private static IValidator<EditableStruct, ValidationState> CreateValidator(ValidationState state)
+        {
+            var validator = Substitute.For<IValidator<EditableStruct, ValidationState>>();
+            validator.Validate(Arg.Any<EditableStruct>()).Returns(state);
+
+            return validator;
         }
     }
 }
