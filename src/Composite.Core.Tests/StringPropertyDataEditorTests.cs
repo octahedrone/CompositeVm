@@ -11,7 +11,7 @@ namespace Composite.Core.Tests
         public void ValueUpdateChangeReportedOnTargetUpdate()
         {
             var target = new EditableStruct {Text = "Initial"};
-            var sut = new StringPropertyDataEditor();
+            var sut = new StringPropertyDataEditor<EditableStruct>(new TextPropertyAdapter());
 
             var manager = new DataEditorsManager<EditableStruct>
             {
@@ -33,7 +33,7 @@ namespace Composite.Core.Tests
             const string updatedValue = "Updated";
 
             var target = new EditableStruct {Text = "Initial"};
-            var sut = new StringPropertyDataEditor();
+            var sut = new StringPropertyDataEditor<EditableStruct>(new TextPropertyAdapter());
 
             var manager = new DataEditorsManager<EditableStruct>
             {

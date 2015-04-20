@@ -31,6 +31,8 @@
   <ItemGroup>
     <Compile Include="DataEditorsManagerTests.cs" />
     <Compile Include="EditrableTargets\EditableStruct.cs" />
+    <Compile Include="IStringPropertyAdapter.cs" />
+    <Compile Include="EditrableTargets\TextPropertyAdapter.cs" />
     <Compile Include="StringPropertyDataEditorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="$(SolutionDir)CommonAssemblyInfo.cs">

@@ -1,37 +1,49 @@
 using System;
-using Composite.Core.Tests.EditrableTargets;
 
 namespace Composite.Core.Tests
 {
-    public class StringPropertyDataEditor : PropertyChangedBase, IDataEditor<EditableStruct>
+    public class StringPropertyDataEditor<TData> : PropertyChangedBase, IDataEditor<TData>
     {
-        private EditableStruct _editableTarget;
+        private readonly IStringPropertyAdapter<TData> _propertyAdapter;
+        
+        private TData _editableTarget;
+
+        public StringPropertyDataEditor(IStringPropertyAdapter<TData> propertyAdapter)
+        {
+            if (propertyAdapter == null) throw new ArgumentNullException("propertyAdapter");
+
+            _propertyAdapter = propertyAdapter;
+        }
 
         public string Value
         {
-            get { return _editableTarget.Text; }
+            get { return _propertyAdapter.GetValue(_editableTarget); }
 
             set
             {
-                if (_editableTarget.Text == value)
+                var currentValue = _propertyAdapter.GetValue(_editableTarget);
+
+                if (currentValue == value)
                     return;
 
-                _editableTarget.Text = value;
+                _editableTarget = _propertyAdapter.SetValue(_editableTarget, value);
 
-                OnTargetUpdated("Text");
+                OnTargetUpdated(_propertyAdapter.PropertyName);
             }
         }
 
-        public EditableStruct EditableTarget
+        public TData EditableTarget
         {
             get { return _editableTarget; }
             set
             {
-                var oldValue = _editableTarget;
+                var oldValue = _propertyAdapter.GetValue(_editableTarget);
 
                 _editableTarget = value;
 
-                if (oldValue.Text != _editableTarget.Text)
+                var newValue = _propertyAdapter.GetValue(_editableTarget);
+
+                if (newValue != oldValue)
                 {
                     OnPropertyChanged("Value");
                 }
