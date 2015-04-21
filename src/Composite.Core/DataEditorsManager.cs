@@ -2,12 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Composite.Core.TypeChecks;
 using Composite.Core.Validation;
 
 namespace Composite.Core
 {
     public class DataEditorsManager<TData, TValidationResult> : IEnumerable<IDataEditor<TData>>
     {
+        private static readonly INullableCheck<TData> TargetNullCheck = ValueChecks.GetNullableCheck<TData>();
+
         private readonly LinkedList<IDataEditor<TData>> _editors = new LinkedList<IDataEditor<TData>>();
         private readonly IValidator<TData, TValidationResult> _validator;
 
@@ -100,7 +103,9 @@ namespace Composite.Core
 
         private void UpdateValidityState()
         {
-            _validationState = _validator.Validate(_editableTarget);
+            _validationState = TargetNullCheck.IsNull(_editableTarget)
+                ? default(TValidationResult)
+                : _validator.Validate(_editableTarget);
 
             foreach (var validatedEditor in _editors.OfType<IValidatedDataEditor<TData, TValidationResult>>())
             {

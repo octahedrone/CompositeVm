@@ -1,10 +1,13 @@
 using System;
 using Composite.Core.Tests.EditrableTargets;
+using Composite.Core.TypeChecks;
 
 namespace Composite.Core.Tests
 {
     public class PropertyDataEditor<TData, TValue> : IValidatedDataEditor<TData, ValidationState>
     {
+        private static readonly INullableCheck<TData> TargetNullCheck = ValueChecks.GetNullableCheck<TData>();
+
         private readonly IEditorComponent<TValue> _component;
         private readonly IPropertyAdapter<TData, TValue> _propertyAdapter;
 
@@ -27,7 +30,9 @@ namespace Composite.Core.Tests
             {
                 _editableTarget = value;
 
-                var newValue = _propertyAdapter.GetValue(_editableTarget);
+                var newValue = TargetNullCheck.IsNull(_editableTarget)
+                    ? default(TValue) 
+                    : _propertyAdapter.GetValue(_editableTarget);
 
                 _component.SetValue(newValue);
             }
@@ -42,6 +47,11 @@ namespace Composite.Core.Tests
 
         private void OnComponentUpdatedValue(object sender, EventArgs e)
         {
+            if (TargetNullCheck.IsNull(_editableTarget))
+            {
+                return;
+            }
+
             var newValue = _component.GetValue();
 
             _editableTarget = _propertyAdapter.SetValue(_editableTarget, newValue);

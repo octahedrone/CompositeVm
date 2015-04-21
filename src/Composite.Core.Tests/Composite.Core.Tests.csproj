@@ -29,14 +29,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassTargetTests\DataEditorsManagerTests.cs" />
+    <Compile Include="ClassTargetTests\StringPropertyDataEditorTests.cs" />
+    <Compile Include="ClassTargetTests\Target\EditableClassTextPropertyAdapter.cs" />
     <Compile Include="StructTargetTests\DataEditorsManagerTests.cs" />
+    <Compile Include="ClassTargetTests\Target\EditableClass.cs" />
     <Compile Include="StructTargetTests\Target\EditableStruct.cs" />
     <Compile Include="EditrableTargets\ValidationState.cs" />
     <Compile Include="IEditorComponent.cs" />
     <Compile Include="StructTargetTests\Target\TextPropertyAdapter.cs" />
     <Compile Include="PropertyChangedBase.cs" />
     <Compile Include="EditorComponent.cs" />
-    <Compile Include="StructTargetTests\EditorComponentTests.cs" />
+    <Compile Include="EditorComponentTests.cs" />
     <Compile Include="StructTargetTests\StringPropertyDataEditorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="$(SolutionDir)CommonAssemblyInfo.cs">
