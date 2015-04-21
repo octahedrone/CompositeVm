@@ -1,6 +1,6 @@
 namespace Composite.Core.Tests.EditrableTargets
 {
-    public class TextPropertyAdapter : IStringPropertyAdapter<EditableStruct>
+    public class TextPropertyAdapter : IPropertyAdapter<EditableStruct, string>
     {
         public string PropertyName
         {

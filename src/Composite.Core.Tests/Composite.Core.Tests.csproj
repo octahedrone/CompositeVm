@@ -33,7 +33,6 @@
     <Compile Include="EditrableTargets\EditableStruct.cs" />
     <Compile Include="EditrableTargets\ValidationState.cs" />
     <Compile Include="IEditorComponent.cs" />
-    <Compile Include="IStringPropertyAdapter.cs" />
     <Compile Include="EditrableTargets\TextPropertyAdapter.cs" />
     <Compile Include="PropertyChangedBase.cs" />
     <Compile Include="EditorComponent.cs" />

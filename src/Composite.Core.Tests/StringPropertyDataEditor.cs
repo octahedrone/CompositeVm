@@ -6,11 +6,11 @@ namespace Composite.Core.Tests
     public class StringPropertyDataEditor<TData> : PropertyChangedBase, IValidatedDataEditor<TData, ValidationState>
     {
         private readonly IEditorComponent<string> _component;
-        private readonly IStringPropertyAdapter<TData> _propertyAdapter;
+        private readonly IPropertyAdapter<TData, string> _propertyAdapter;
 
         private TData _editableTarget;
 
-        public StringPropertyDataEditor(IStringPropertyAdapter<TData> propertyAdapter, IEditorComponent<string> component)
+        public StringPropertyDataEditor(IPropertyAdapter<TData, string> propertyAdapter, IEditorComponent<string> component)
         {
             if (propertyAdapter == null) throw new ArgumentNullException("propertyAdapter");
 
@@ -88,7 +88,7 @@ namespace Composite.Core.Tests
     {
         private readonly TComponent _component;
 
-        public ScalarPropertyDataEditor(IStringPropertyAdapter<TData> propertyAdapter, TComponent component)
+        public ScalarPropertyDataEditor(IPropertyAdapter<TData, string> propertyAdapter, TComponent component)
             : base(propertyAdapter, component)
         {
             _component = component;
