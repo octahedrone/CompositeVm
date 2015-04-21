@@ -1,4 +1,4 @@
-namespace Composite.Core.Tests.EditrableTargets
+namespace Composite.Core.Tests.StructTargetTests.Target
 {
     public class TextPropertyAdapter : IPropertyAdapter<EditableStruct, string>
     {

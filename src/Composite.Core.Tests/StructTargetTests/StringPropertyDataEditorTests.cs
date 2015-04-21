@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using Composite.Core.Tests.EditrableTargets;
+using Composite.Core.Tests.StructTargetTests.Target;
 using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace Composite.Core.Tests
+namespace Composite.Core.Tests.StructTargetTests
 {
     [TestFixture]
     public class StringPropertyDataEditorTests

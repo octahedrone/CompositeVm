@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Composite.Core.Tests.EditrableTargets
+namespace Composite.Core.Tests.StructTargetTests.Target
 {
     public struct EditableStruct
     {
