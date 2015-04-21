@@ -9,5 +9,7 @@ namespace Composite.Core.Tests
         string GetValue();
 
         void SetValue(string value);
+
+        void SetError(string error);
     }
 }
