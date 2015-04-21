@@ -13,7 +13,8 @@ namespace Composite.Core.Tests
         public void ValueUpdateChangeReportedOnTargetUpdate()
         {
             var target = new EditableStruct {Text = "Initial"};
-            var sut = new StringPropertyDataEditor<EditableStruct>(new TextPropertyAdapter());
+            var editorComponent = new StringEditorComponent();
+            var sut = new ScalarPropertyDataEditor<EditableStruct, StringEditorComponent>(new TextPropertyAdapter(), editorComponent);
 
             var validator = CreateValidator();
 
@@ -23,12 +24,12 @@ namespace Composite.Core.Tests
             };
 
             // act
-            sut.MonitorEvents();
+            sut.Component.MonitorEvents();
 
             manager.EditableTarget = target;
 
             // assert
-            sut.ShouldRaisePropertyChangeFor(x => x.Value);
+            sut.Component.ShouldRaisePropertyChangeFor(x => x.Value);
         }
 
         [Test]
@@ -37,7 +38,8 @@ namespace Composite.Core.Tests
             const string updatedValue = "Updated";
 
             var target = new EditableStruct {Text = "Initial"};
-            var sut = new StringPropertyDataEditor<EditableStruct>(new TextPropertyAdapter());
+            var editorComponent = new StringEditorComponent();
+            var sut = new ScalarPropertyDataEditor<EditableStruct, StringEditorComponent>(new TextPropertyAdapter(), editorComponent);
 
             var validator = CreateValidator();
 
@@ -51,7 +53,7 @@ namespace Composite.Core.Tests
 
             manager.EditableTarget = target;
 
-            sut.Value = updatedValue;
+            sut.Component.Value = updatedValue;
 
             // assert
             sut.ShouldRaise("TargetUpdated")
