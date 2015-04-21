@@ -3,7 +3,7 @@ using Composite.Core.Tests.EditrableTargets;
 
 namespace Composite.Core.Tests
 {
-    public class PropertyDataEditor<TData, TValue> : PropertyChangedBase, IValidatedDataEditor<TData, ValidationState>
+    public class PropertyDataEditor<TData, TValue> : IValidatedDataEditor<TData, ValidationState>
     {
         private readonly IEditorComponent<TValue> _component;
         private readonly IPropertyAdapter<TData, TValue> _propertyAdapter;
