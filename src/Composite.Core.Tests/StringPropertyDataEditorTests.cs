@@ -15,7 +15,7 @@ namespace Composite.Core.Tests
             var target = new EditableStruct {Text = "Initial"};
             var editorComponent = new EditorComponent<string>();
             var propertyAdapter = new TextPropertyAdapter();
-            var sut = new ScalarPropertyDataEditor<EditableStruct, EditorComponent<string>>(propertyAdapter, editorComponent);
+            var sut = new ScalarPropertyDataEditor<EditableStruct, string, EditorComponent<string>>(propertyAdapter, editorComponent);
 
             // act
             sut.Component.MonitorEvents();
@@ -36,7 +36,7 @@ namespace Composite.Core.Tests
 
             var editorComponent = Substitute.For<IEditorComponent<string>>();
             var propertyAdapter = new TextPropertyAdapter();
-            var sut = new StringPropertyDataEditor<EditableStruct>(propertyAdapter, editorComponent)
+            var sut = new PropertyDataEditor<EditableStruct, string>(propertyAdapter, editorComponent)
             {
                 EditableTarget = target
             };
@@ -60,7 +60,7 @@ namespace Composite.Core.Tests
 
             var editorComponent = Substitute.For<IEditorComponent<string>>();
             var propertyAdapter = new TextPropertyAdapter();
-            var sut = new StringPropertyDataEditor<EditableStruct>(propertyAdapter, editorComponent)
+            var sut = new PropertyDataEditor<EditableStruct, string>(propertyAdapter, editorComponent)
             {
                 EditableTarget = target
             };
@@ -83,7 +83,7 @@ namespace Composite.Core.Tests
             var target = new EditableStruct {Text = "Initial"};
             var editorComponent = new EditorComponent<string>();
             var propertyAdapter = new TextPropertyAdapter();
-            var sut = new ScalarPropertyDataEditor<EditableStruct, EditorComponent<string>>(propertyAdapter, editorComponent);
+            var sut = new ScalarPropertyDataEditor<EditableStruct, string, EditorComponent<string>>(propertyAdapter, editorComponent);
 
             // act
             sut.MonitorEvents();

@@ -3,14 +3,14 @@ using Composite.Core.Tests.EditrableTargets;
 
 namespace Composite.Core.Tests
 {
-    public class StringPropertyDataEditor<TData> : PropertyChangedBase, IValidatedDataEditor<TData, ValidationState>
+    public class PropertyDataEditor<TData, TValue> : PropertyChangedBase, IValidatedDataEditor<TData, ValidationState>
     {
-        private readonly IEditorComponent<string> _component;
-        private readonly IPropertyAdapter<TData, string> _propertyAdapter;
+        private readonly IEditorComponent<TValue> _component;
+        private readonly IPropertyAdapter<TData, TValue> _propertyAdapter;
 
         private TData _editableTarget;
 
-        public StringPropertyDataEditor(IPropertyAdapter<TData, string> propertyAdapter, IEditorComponent<string> component)
+        public PropertyDataEditor(IPropertyAdapter<TData, TValue> propertyAdapter, IEditorComponent<TValue> component)
         {
             if (propertyAdapter == null) throw new ArgumentNullException("propertyAdapter");
 
@@ -25,16 +25,11 @@ namespace Composite.Core.Tests
             get { return _editableTarget; }
             set
             {
-                var oldValue = _propertyAdapter.GetValue(_editableTarget);
-
                 _editableTarget = value;
 
                 var newValue = _propertyAdapter.GetValue(_editableTarget);
 
-                if (newValue != oldValue)
-                {
-                    _component.SetValue(newValue);
-                }
+                _component.SetValue(newValue);
             }
         }
 
@@ -47,13 +42,7 @@ namespace Composite.Core.Tests
 
         private void OnComponentUpdatedValue(object sender, EventArgs e)
         {
-            var oldValue = _propertyAdapter.GetValue(_editableTarget);
             var newValue = _component.GetValue();
-
-            if (newValue == oldValue)
-            {
-                return;
-            }
 
             _editableTarget = _propertyAdapter.SetValue(_editableTarget, newValue);
 
@@ -83,12 +72,12 @@ namespace Composite.Core.Tests
         }
     }
 
-    public class ScalarPropertyDataEditor<TData, TComponent> : StringPropertyDataEditor<TData>
-        where TComponent : IEditorComponent<string>
+    public class ScalarPropertyDataEditor<TData, TValue, TComponent> : PropertyDataEditor<TData, TValue>
+        where TComponent : IEditorComponent<TValue>
     {
         private readonly TComponent _component;
 
-        public ScalarPropertyDataEditor(IPropertyAdapter<TData, string> propertyAdapter, TComponent component)
+        public ScalarPropertyDataEditor(IPropertyAdapter<TData, TValue> propertyAdapter, TComponent component)
             : base(propertyAdapter, component)
         {
             _component = component;

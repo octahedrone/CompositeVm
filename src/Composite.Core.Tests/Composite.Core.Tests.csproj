@@ -42,7 +42,7 @@
     <Compile Include="$(SolutionDir)CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="StringPropertyDataEditor.cs" />
+    <Compile Include="PropertyDataEditor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
