@@ -2,13 +2,13 @@ using System;
 
 namespace Composite.Core.Tests
 {
-    public interface IStringEditorComponent
+    public interface IEditorComponent<TValue>
     {
         event EventHandler<EventArgs> ValueUpdated;
 
-        string GetValue();
+        TValue GetValue();
 
-        void SetValue(string value);
+        void SetValue(TValue value);
 
         void SetError(string error);
     }

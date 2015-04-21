@@ -32,12 +32,12 @@
     <Compile Include="DataEditorsManagerTests.cs" />
     <Compile Include="EditrableTargets\EditableStruct.cs" />
     <Compile Include="EditrableTargets\ValidationState.cs" />
-    <Compile Include="IStringEditorComponent.cs" />
+    <Compile Include="IEditorComponent.cs" />
     <Compile Include="IStringPropertyAdapter.cs" />
     <Compile Include="EditrableTargets\TextPropertyAdapter.cs" />
     <Compile Include="PropertyChangedBase.cs" />
-    <Compile Include="StringEditorComponent.cs" />
-    <Compile Include="StringEditorComponentTests.cs" />
+    <Compile Include="EditorComponent.cs" />
+    <Compile Include="EditorComponentTests.cs" />
     <Compile Include="StringPropertyDataEditorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="$(SolutionDir)CommonAssemblyInfo.cs">

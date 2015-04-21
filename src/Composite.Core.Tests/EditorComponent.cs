@@ -1,20 +1,35 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Composite.Core.Tests
 {
-    public class StringEditorComponent : PropertyChangedBase, IStringEditorComponent, IDataErrorInfo
+    public class EditorComponent<TValue> : PropertyChangedBase, IEditorComponent<TValue>, IDataErrorInfo
     {
-        private string _value;
+        private TValue _value;
         private string _error;
 
-        public string Value
+        private readonly IEqualityComparer<TValue> _valueComparer;
+
+        public EditorComponent()
+            : this(EqualityComparer<TValue>.Default)
+        {
+        }
+
+        public EditorComponent(IEqualityComparer<TValue> valueComparer)
+        {
+            if (valueComparer == null) throw new ArgumentNullException("valueComparer");
+
+            _valueComparer = valueComparer;
+        }
+
+        public TValue Value
         {
             get { return _value; }
 
             set
             {
-                if (_value == value)
+                if (_valueComparer.Equals(_value, value))
                 {
                     return;
                 }
@@ -27,14 +42,14 @@ namespace Composite.Core.Tests
 
         public event EventHandler<EventArgs> ValueUpdated;
 
-        string IStringEditorComponent.GetValue()
+        TValue IEditorComponent<TValue>.GetValue()
         {
             return _value;
         }
 
-        void IStringEditorComponent.SetValue(string value)
+        void IEditorComponent<TValue>.SetValue(TValue value)
         {
-            if (_value == value)
+            if (_valueComparer.Equals(_value, value))
             {
                 return;
             }

@@ -13,9 +13,9 @@ namespace Composite.Core.Tests
         public void ValueUpdateChangeReportedOnTargetUpdate()
         {
             var target = new EditableStruct {Text = "Initial"};
-            var editorComponent = new StringEditorComponent();
+            var editorComponent = new EditorComponent<string>();
             var propertyAdapter = new TextPropertyAdapter();
-            var sut = new ScalarPropertyDataEditor<EditableStruct, StringEditorComponent>(propertyAdapter, editorComponent);
+            var sut = new ScalarPropertyDataEditor<EditableStruct, EditorComponent<string>>(propertyAdapter, editorComponent);
 
             // act
             sut.Component.MonitorEvents();
@@ -34,7 +34,7 @@ namespace Composite.Core.Tests
 
             var target = new EditableStruct {Text = "Invalid"};
 
-            var editorComponent = Substitute.For<IStringEditorComponent>();
+            var editorComponent = Substitute.For<IEditorComponent<string>>();
             var propertyAdapter = new TextPropertyAdapter();
             var sut = new StringPropertyDataEditor<EditableStruct>(propertyAdapter, editorComponent)
             {
@@ -58,7 +58,7 @@ namespace Composite.Core.Tests
 
             var target = new EditableStruct {Text = "Invalid"};
 
-            var editorComponent = Substitute.For<IStringEditorComponent>();
+            var editorComponent = Substitute.For<IEditorComponent<string>>();
             var propertyAdapter = new TextPropertyAdapter();
             var sut = new StringPropertyDataEditor<EditableStruct>(propertyAdapter, editorComponent)
             {
@@ -81,9 +81,9 @@ namespace Composite.Core.Tests
             const string updatedValue = "Updated";
 
             var target = new EditableStruct {Text = "Initial"};
-            var editorComponent = new StringEditorComponent();
+            var editorComponent = new EditorComponent<string>();
             var propertyAdapter = new TextPropertyAdapter();
-            var sut = new ScalarPropertyDataEditor<EditableStruct, StringEditorComponent>(propertyAdapter, editorComponent);
+            var sut = new ScalarPropertyDataEditor<EditableStruct, EditorComponent<string>>(propertyAdapter, editorComponent);
 
             // act
             sut.MonitorEvents();
