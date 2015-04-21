@@ -1,8 +1,9 @@
 using System;
+using Composite.Core.Tests.EditrableTargets;
 
 namespace Composite.Core.Tests
 {
-    public class StringPropertyDataEditor<TData> : PropertyChangedBase, IDataEditor<TData>
+    public class StringPropertyDataEditor<TData> : PropertyChangedBase, IValidatedDataEditor<TData, ValidationState>
     {
         private readonly IStringEditorComponent _component;
         private readonly IStringPropertyAdapter<TData> _propertyAdapter;
@@ -65,6 +66,20 @@ namespace Composite.Core.Tests
 
             if (handler != null)
                 handler(this, new PropertyUpdatedEventArgs(targetPropertyName));
+        }
+
+        public void UpdateValidationState(ValidationState state)
+        {
+            if (state == null)
+            {
+                _component.SetError(null);
+                return;
+            }
+
+            string error;
+            state.TryGetPropertyError(_propertyAdapter.PropertyName, out error);
+
+            _component.SetError(error);
         }
     }
 

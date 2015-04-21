@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace Composite.Core.Tests.EditrableTargets
 {
-    public struct ValidationState
+    public class ValidationState
     {
         public static readonly ValidationState Valid = new ValidationState(new Dictionary<string, string>(0));
 
         private readonly IDictionary<string, string> _errors;
 
-        public ValidationState(IDictionary<string, string> errors) : this()
+        public ValidationState(IDictionary<string, string> errors)
         {
             if (errors == null) throw new ArgumentNullException("errors");
 
@@ -24,12 +24,9 @@ namespace Composite.Core.Tests.EditrableTargets
             }
         }
 
-        public IEnumerable<string> InvalidProperties
+        public bool TryGetPropertyError(string propertyName, out string error)
         {
-            get
-            {
-                return _errors.Keys;
-            }
+            return _errors.TryGetValue(propertyName, out error);
         }
     }
 }

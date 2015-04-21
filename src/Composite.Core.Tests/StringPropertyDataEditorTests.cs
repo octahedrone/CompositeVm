@@ -1,5 +1,5 @@
-﻿using Composite.Core.Tests.EditrableTargets;
-using Composite.Core.Validation;
+﻿using System.Collections.Generic;
+using Composite.Core.Tests.EditrableTargets;
 using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
@@ -14,22 +14,65 @@ namespace Composite.Core.Tests
         {
             var target = new EditableStruct {Text = "Initial"};
             var editorComponent = new StringEditorComponent();
-            var sut = new ScalarPropertyDataEditor<EditableStruct, StringEditorComponent>(new TextPropertyAdapter(), editorComponent);
-
-            var validator = CreateValidator();
-
-            var manager = new DataEditorsManager<EditableStruct, ValidationState>(validator)
-            {
-                sut
-            };
+            var propertyAdapter = new TextPropertyAdapter();
+            var sut = new ScalarPropertyDataEditor<EditableStruct, StringEditorComponent>(propertyAdapter, editorComponent);
 
             // act
             sut.Component.MonitorEvents();
 
-            manager.EditableTarget = target;
+            sut.EditableTarget = target;
 
             // assert
             sut.Component.ShouldRaisePropertyChangeFor(x => x.Value);
+            sut.Component.Value.Should().Be(target.Text);
+        }
+
+        [Test]
+        public void ComponentErrorIsUpdatedWhenValidationFails()
+        {
+            const string message = "Error";
+
+            var target = new EditableStruct {Text = "Invalid"};
+
+            var editorComponent = Substitute.For<IStringEditorComponent>();
+            var propertyAdapter = new TextPropertyAdapter();
+            var sut = new StringPropertyDataEditor<EditableStruct>(propertyAdapter, editorComponent)
+            {
+                EditableTarget = target
+            };
+
+            // act
+            sut.UpdateValidationState(new ValidationState(new Dictionary<string, string>
+            {
+                {propertyAdapter.PropertyName, message}
+            }));
+
+            // assert
+            editorComponent.Received().SetError(message);
+        }
+
+        [Test]
+        public void ComponentErrorIsUpdatedOnlyWithItsPropertyErrors()
+        {
+            const string message = "Error";
+
+            var target = new EditableStruct {Text = "Invalid"};
+
+            var editorComponent = Substitute.For<IStringEditorComponent>();
+            var propertyAdapter = new TextPropertyAdapter();
+            var sut = new StringPropertyDataEditor<EditableStruct>(propertyAdapter, editorComponent)
+            {
+                EditableTarget = target
+            };
+
+            // act
+            sut.UpdateValidationState(new ValidationState(new Dictionary<string, string>
+            {
+                {"Some property", message}
+            }));
+
+            // assert
+            editorComponent.DidNotReceive().SetError(message);
         }
 
         [Test]
@@ -39,19 +82,13 @@ namespace Composite.Core.Tests
 
             var target = new EditableStruct {Text = "Initial"};
             var editorComponent = new StringEditorComponent();
-            var sut = new ScalarPropertyDataEditor<EditableStruct, StringEditorComponent>(new TextPropertyAdapter(), editorComponent);
-
-            var validator = CreateValidator();
-
-            var manager = new DataEditorsManager<EditableStruct, ValidationState>(validator)
-            {
-                sut
-            };
+            var propertyAdapter = new TextPropertyAdapter();
+            var sut = new ScalarPropertyDataEditor<EditableStruct, StringEditorComponent>(propertyAdapter, editorComponent);
 
             // act
             sut.MonitorEvents();
 
-            manager.EditableTarget = target;
+            sut.EditableTarget = target;
 
             sut.Component.Value = updatedValue;
 
@@ -60,15 +97,7 @@ namespace Composite.Core.Tests
                 .WithSender(sut)
                 .WithArgs<PropertyUpdatedEventArgs>(args => args.PropertyName == "Text");
 
-            manager.EditableTarget.Text.Should().Be(updatedValue);
-        }
-
-        private static IValidator<EditableStruct, ValidationState> CreateValidator()
-        {
-            var validator = Substitute.For<IValidator<EditableStruct, ValidationState>>();
-            validator.Validate(Arg.Any<EditableStruct>()).Returns(ValidationState.Valid);
-
-            return validator;
+            sut.Component.Value.Should().Be(updatedValue);
         }
     }
 }
