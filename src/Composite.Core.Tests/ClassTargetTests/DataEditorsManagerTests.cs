@@ -120,6 +120,29 @@ namespace Composite.Core.Tests.ClassTargetTests
         }
 
         [Test]
+        public void EditorsTargetIsNulledWhenManagersIsNulled()
+        {
+            var target = new EditableClass { Text = "Initial" };
+
+            var editorA = Substitute.For<IDataEditor<EditableClass>>();
+            editorA.EditableTarget = target;
+
+            var validator = CreateValidator();
+
+            // act
+            _sut = new DataEditorsManager<EditableClass, ValidationState>(validator)
+            {
+                editorA
+            };
+
+            _sut.EditableTarget = target;
+            _sut.EditableTarget = null;
+
+            // assert
+            editorA.EditableTarget.Should().BeNull();
+        }
+
+        [Test]
         public void EditorsValidityStateIsUpdatedWhenManagersTargetIsUpdated()
         {
             var target = new EditableClass {Text = "Initial"};
@@ -141,6 +164,30 @@ namespace Composite.Core.Tests.ClassTargetTests
 
             // assert
             editorB.Received().UpdateValidationState(state);
+        }
+
+        [Test]
+        public void AnyEditorTargetUpdateIsIgnoredWhenTargetIsNull()
+        {
+            var editorA = Substitute.For<IDataEditor<EditableClass>>();
+            var editorB = Substitute.For<IDataEditor<EditableClass>>();
+
+            var validator = CreateValidator();
+
+            _sut = new DataEditorsManager<EditableClass, ValidationState>(validator)
+            {
+                editorA,
+                editorB
+            };
+
+            _sut.EditableTarget = null;
+
+            // act
+            var args = new PropertyUpdatedEventArgs("Text");
+            editorB.TargetUpdated += Raise.EventWith(args);
+
+            // assert
+            editorA.EditableTarget.Should().BeNull();
         }
 
         [Test]
