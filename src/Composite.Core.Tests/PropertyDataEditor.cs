@@ -1,5 +1,4 @@
 using System;
-using Composite.Core.Tests.EditrableTargets;
 using Composite.Core.TypeChecks;
 
 namespace Composite.Core.Tests

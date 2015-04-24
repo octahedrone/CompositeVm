@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Composite.Core.Tests.ClassTargetTests.Target;
-using Composite.Core.Tests.EditrableTargets;
 using Composite.Core.Validation;
 using FluentAssertions;
 using NSubstitute;

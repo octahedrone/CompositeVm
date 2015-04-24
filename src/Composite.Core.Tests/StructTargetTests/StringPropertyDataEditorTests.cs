@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Composite.Core.Tests.EditrableTargets;
 using Composite.Core.Tests.StructTargetTests.Target;
 using FluentAssertions;
 using NSubstitute;

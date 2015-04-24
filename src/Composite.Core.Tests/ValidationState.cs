@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Composite.Core.Tests.EditrableTargets
+namespace Composite.Core.Tests
 {
     public class ValidationState
     {

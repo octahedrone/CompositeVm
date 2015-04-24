@@ -35,7 +35,7 @@
     <Compile Include="StructTargetTests\DataEditorsManagerTests.cs" />
     <Compile Include="ClassTargetTests\Target\EditableClass.cs" />
     <Compile Include="StructTargetTests\Target\EditableStruct.cs" />
-    <Compile Include="EditrableTargets\ValidationState.cs" />
+    <Compile Include="ValidationState.cs" />
     <Compile Include="IEditorComponent.cs" />
     <Compile Include="StructTargetTests\Target\TextPropertyAdapter.cs" />
     <Compile Include="PropertyChangedBase.cs" />
@@ -57,5 +57,6 @@
       <Name>Composite.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
