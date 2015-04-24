@@ -10,6 +10,7 @@ namespace Composite.Core
     public class DataEditorsManager<TData, TValidationResult> : IEnumerable<IDataEditor<TData>>
     {
         private static readonly INullableCheck<TData> TargetNullCheck = ValueChecks.GetNullableCheck<TData>();
+        private static readonly INullableCheck<TValidationResult> ValidationNullCheck = ValueChecks.GetNullableCheck<TValidationResult>();
 
         private readonly LinkedList<IDataEditor<TData>> _editors = new LinkedList<IDataEditor<TData>>();
         private readonly IValidator<TData, TValidationResult> _validator;
@@ -37,13 +38,13 @@ namespace Composite.Core
 
             // update target
             editor.EditableTarget = _editableTarget;
-
+            
             // update validation state
             var validatedEditor = editor as IValidatedDataEditor<TData, TValidationResult>;
 
             if (validatedEditor != null)
             {
-                validatedEditor.UpdateValidationState(_validationState);
+                UpdateEditorValidityState(validatedEditor);
             }
         }
 
@@ -107,7 +108,29 @@ namespace Composite.Core
                 ? default(TValidationResult)
                 : _validator.Validate(_editableTarget);
 
-            foreach (var validatedEditor in _editors.OfType<IValidatedDataEditor<TData, TValidationResult>>())
+            if (ValidationNullCheck.IsNull(_validationState))
+            {
+                foreach (var validatedEditor in _editors.OfType<IValidatedDataEditor<TData, TValidationResult>>())
+                {
+                    validatedEditor.ClearValidationState();
+                }
+            }
+            else
+            {
+                foreach (var validatedEditor in _editors.OfType<IValidatedDataEditor<TData, TValidationResult>>())
+                {
+                    validatedEditor.UpdateValidationState(_validationState);
+                }
+            }
+        }
+
+        private void UpdateEditorValidityState(IValidatedDataEditor<TData, TValidationResult> validatedEditor)
+        {
+            if (ValidationNullCheck.IsNull(_validationState))
+            {
+                validatedEditor.ClearValidationState();
+            }
+            else
             {
                 validatedEditor.UpdateValidationState(_validationState);
             }

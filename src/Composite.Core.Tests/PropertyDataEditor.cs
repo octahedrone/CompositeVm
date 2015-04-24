@@ -68,16 +68,15 @@ namespace Composite.Core.Tests
 
         public void UpdateValidationState(ValidationState state)
         {
-            if (state == null)
-            {
-                _component.SetError(null);
-                return;
-            }
-
             string error;
             state.TryGetPropertyError(_propertyAdapter.PropertyName, out error);
 
             _component.SetError(error);
+        }
+
+        public void ClearValidationState()
+        {
+            _component.SetError(null);
         }
     }
 
