@@ -7,6 +7,11 @@ namespace Composite.Core.Tests.ClassTargetTests.Target
             get { return "Text"; }
         }
 
+        public bool IsReadOnly
+        {
+            get { return false; }
+        }
+
         public string GetValue(EditableClass source)
         {
             return source.Text;

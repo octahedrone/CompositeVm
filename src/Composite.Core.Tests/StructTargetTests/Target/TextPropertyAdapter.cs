@@ -12,6 +12,11 @@ namespace Composite.Core.Tests.StructTargetTests.Target
             return source.Text;
         }
 
+        public bool IsReadOnly
+        {
+            get { return false; }
+        }
+
         public EditableStruct SetValue(EditableStruct target, string value)
         {
             target.Text = value;
