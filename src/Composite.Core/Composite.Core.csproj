@@ -23,6 +23,7 @@
     <Compile Include="IValidatedDataEditor.cs" />
     <Compile Include="PropertyAdapaters\ClassTypeGenericPropertyAdapter.cs" />
     <Compile Include="PropertyAdapaters\ExpressionTools.cs" />
+    <Compile Include="PropertyAdapaters\ValueTypeGenericPropertyAdapter.cs" />
     <Compile Include="TypeChecks\INullableCheck.cs" />
     <Compile Include="TypeChecks\ReferenceTypeNullableCheck.cs" />
     <Compile Include="TypeChecks\ValueChecks.cs" />
