@@ -6,12 +6,12 @@ namespace Composite.Core.TypeChecks
     {
         public static INullableCheck<TValue> GetNullableCheck<TValue>()
         {
-            return IsReferenceType<TValue>()
+            return IsNullableType<TValue>()
                 ? ReferenceTypeNullableCheck<TValue>.Instance
                 : ValueTypeNullableCheck<TValue>.Instance;
         }
 
-        private static bool IsReferenceType<TValue>()
+        public static bool IsNullableType<TValue>()
         {
             var type = typeof (TValue);
             if (!type.IsValueType)

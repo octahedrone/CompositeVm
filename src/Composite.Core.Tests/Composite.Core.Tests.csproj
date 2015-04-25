@@ -35,6 +35,9 @@
     <Compile Include="StructTargetTests\DataEditorsManagerTests.cs" />
     <Compile Include="ClassTargetTests\Target\EditableClass.cs" />
     <Compile Include="StructTargetTests\Target\EditableStruct.cs" />
+    <Compile Include="TypeChecks\ReferenceTypeNullableCheckTests.cs" />
+    <Compile Include="TypeChecks\ValueChecksTests.cs" />
+    <Compile Include="TypeChecks\ValueTypeNullableCheckTests.cs" />
     <Compile Include="ValidationState.cs" />
     <Compile Include="IEditorComponent.cs" />
     <Compile Include="StructTargetTests\Target\TextPropertyAdapter.cs" />
