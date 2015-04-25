@@ -10,6 +10,7 @@ namespace Composite.Core.Tests
         private string _error;
 
         private readonly IEqualityComparer<TValue> _valueComparer;
+        private bool _isReadOnly;
 
         public EditorComponent()
             : this(EqualityComparer<TValue>.Default)
@@ -40,7 +41,26 @@ namespace Composite.Core.Tests
             }
         }
 
+        public bool IsReadOnly
+        {
+            get { return _isReadOnly; }
+            private set
+            {
+                if (_isReadOnly == value)
+                    return;
+
+                _isReadOnly = value;
+
+                OnPropertyChanged("IsReadOnly");
+            }
+        }
+
         public event EventHandler<EventArgs> ValueUpdated;
+
+        void IEditorComponent<TValue>.SetReadOnly(bool readOnly)
+        {
+            IsReadOnly = readOnly;
+        }
 
         TValue IEditorComponent<TValue>.GetValue()
         {

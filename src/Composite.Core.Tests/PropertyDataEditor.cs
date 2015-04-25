@@ -20,6 +20,8 @@ namespace Composite.Core.Tests
             _component = component;
 
             _component.ValueUpdated += OnComponentUpdatedValue;
+
+            _component.SetReadOnly(_propertyAdapter.IsReadOnly);
         }
 
         public TData EditableTarget

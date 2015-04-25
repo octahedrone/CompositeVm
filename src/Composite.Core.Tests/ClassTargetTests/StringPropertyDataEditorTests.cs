@@ -10,6 +10,19 @@ namespace Composite.Core.Tests.ClassTargetTests
     public class StringPropertyDataEditorTests
     {
         [Test]
+        public void ReadonlyStateIsAssignedToComponent()
+        {
+            var editorComponent = new EditorComponent<string>();
+            var propertyAdapter = EditableClassMetadata.ReadonlyTextProperty;
+            
+            // act
+            var sut = new ScalarPropertyDataEditor<EditableClass, string, EditorComponent<string>>(propertyAdapter, editorComponent);
+
+            // assert
+            sut.Component.IsReadOnly.Should().Be(EditableClassMetadata.ReadonlyTextProperty.IsReadOnly);
+        }
+
+        [Test]
         public void NullEditableTargetIsTolerated()
         {
             var editorComponent = new EditorComponent<string>();

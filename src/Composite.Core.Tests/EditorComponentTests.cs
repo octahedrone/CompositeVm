@@ -136,5 +136,23 @@ namespace Composite.Core.Tests
                 .WithSender(implicitSut)
                 .WithArgs<EventArgs>(args => args == EventArgs.Empty);
         }
+
+        [Test]
+        public void EventIsRaisedWhenReadOnlyStateIsUpdated()
+        {
+            var sut = new EditorComponent<string>();
+            var implicitSut = (IEditorComponent<string>) sut;
+
+            const bool isReadOnly = true;
+
+            // act
+            implicitSut.MonitorEvents();
+
+            implicitSut.SetReadOnly(isReadOnly);
+
+            // assert
+            sut.ShouldRaisePropertyChangeFor(x => x.IsReadOnly);
+            sut.IsReadOnly.Should().Be(isReadOnly);
+        }
     }
 }

@@ -5,6 +5,7 @@ namespace Composite.Core.Tests.StructTargetTests.Target
     public static class EditableStructMetadata
     {
         public static readonly IPropertyAdapter<EditableStruct, string> TextProperty;
+        public static readonly IPropertyAdapter<EditableStruct, string> ReadonlyTextProperty;
 
         static EditableStructMetadata()
         {
@@ -13,6 +14,8 @@ namespace Composite.Core.Tests.StructTargetTests.Target
                 t.Text = v;
                 return t;
             });
+
+            ReadonlyTextProperty = new ValueTypeGenericPropertyAdapter<EditableStruct, string>(_ => _.Text);
         }
     }
 }
