@@ -32,6 +32,7 @@
     <Compile Include="ClassTargetTests\DataEditorsManagerTests.cs" />
     <Compile Include="ClassTargetTests\StringPropertyDataEditorTests.cs" />
     <Compile Include="ClassTargetTests\Target\EditableClassTextPropertyAdapter.cs" />
+    <Compile Include="ClassTypeGenericPropertyAdapterTests.cs" />
     <Compile Include="StructTargetTests\DataEditorsManagerTests.cs" />
     <Compile Include="ClassTargetTests\Target\EditableClass.cs" />
     <Compile Include="StructTargetTests\Target\EditableStruct.cs" />
