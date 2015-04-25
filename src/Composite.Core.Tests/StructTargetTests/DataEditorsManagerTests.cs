@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Composite.Core.Tests.ClassTargetTests.Target;
+﻿using System;
+using System.Collections.Generic;
 using Composite.Core.Tests.StructTargetTests.Target;
 using Composite.Core.Validation;
 using FluentAssertions;
@@ -123,6 +123,26 @@ namespace Composite.Core.Tests.StructTargetTests
         }
 
         [Test]
+        public void ManagersValidityStateIsUpdatedOnTargetUpdate()
+        {
+            var target = new EditableStruct {Text = "Initial"};
+
+            var state = ValidationState.Valid;
+            var validator = CreateValidator(state);
+
+            _sut = new DataEditorsManager<EditableStruct, ValidationState>(validator);
+
+            // act
+            _sut.MonitorEvents();
+            _sut.EditableTarget = target;
+
+            // assert
+            _sut.ShouldRaise("ValidationStateUpdated")
+                .WithSender(_sut)
+                .WithArgs<EventArgs>(args => args == EventArgs.Empty);
+        }
+
+        [Test]
         public void AllEditorsTargetsAreSynchronizedOnSingleEditorUpdate()
         {
             var target = new EditableStruct {Text = "Initial"};
@@ -151,6 +171,39 @@ namespace Composite.Core.Tests.StructTargetTests
             _comparer.Equals(editorA.EditableTarget, updatedTarget).Should().BeTrue();
             _comparer.Equals(_sut.EditableTarget, updatedTarget).Should().BeTrue();
         }
+
+
+        [Test]
+        public void ManagersValidityStateIsUpdatedOnSingleEditorUpdate()
+        {
+            var target = new EditableStruct { Text = "Initial" };
+
+            var editorB = Substitute.For<IDataEditor<EditableStruct>>();
+
+            var validator = CreateValidator();
+
+            _sut = new DataEditorsManager<EditableStruct, ValidationState>(validator)
+            {
+                editorB
+            };
+
+            _sut.EditableTarget = target;
+
+            // act
+            _sut.MonitorEvents();
+
+            var updatedTarget = new EditableStruct { Text = "Updated" };
+            editorB.EditableTarget = updatedTarget;
+
+            var args = new PropertyUpdatedEventArgs("Text");
+            editorB.TargetUpdated += Raise.EventWith(args);
+
+            // assert
+            _sut.ShouldRaise("ValidationStateUpdated")
+                .WithSender(_sut)
+                .WithArgs<EventArgs>(a => a == EventArgs.Empty);
+        }
+
 
         [Test]
         public void ValidatedEditorsValidationStateIsUpdatedOnSingleEditorUpdate()

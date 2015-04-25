@@ -10,7 +10,9 @@ namespace Composite.Core
     public class DataEditorsManager<TData, TValidationResult> : IEnumerable<IDataEditor<TData>>
     {
         private static readonly INullableCheck<TData> TargetNullCheck = ValueChecks.GetNullableCheck<TData>();
-        private static readonly INullableCheck<TValidationResult> ValidationNullCheck = ValueChecks.GetNullableCheck<TValidationResult>();
+
+        private static readonly INullableCheck<TValidationResult> ValidationNullCheck =
+            ValueChecks.GetNullableCheck<TValidationResult>();
 
         private readonly LinkedList<IDataEditor<TData>> _editors = new LinkedList<IDataEditor<TData>>();
         private readonly IValidator<TData, TValidationResult> _validator;
@@ -24,7 +26,31 @@ namespace Composite.Core
 
             _validator = validator;
         }
-        
+
+        public event EventHandler<EventArgs> ValidationStateUpdated;
+
+        public TData EditableTarget
+        {
+            get { return _editableTarget; }
+            set
+            {
+                UpdateEditableTargets(value, null);
+
+                UpdateValidityState();
+            }
+        }
+
+        public TValidationResult ValidationState
+        {
+            get { return _validationState; }
+            private set
+            {
+                _validationState = value;
+
+                OnValidationStateUpdated();
+            }
+        }
+
         public void Add(IDataEditor<TData> editor)
         {
             if (_editors.Contains(editor))
@@ -38,7 +64,7 @@ namespace Composite.Core
 
             // update target
             editor.EditableTarget = _editableTarget;
-            
+
             // update validation state
             var validatedEditor = editor as IValidatedDataEditor<TData, TValidationResult>;
 
@@ -53,17 +79,6 @@ namespace Composite.Core
             editor.TargetUpdated -= OnEditorUpdatesTarget;
 
             _editors.Remove(editor);
-        }
-
-        public TData EditableTarget
-        {
-            get { return _editableTarget; }
-            set
-            {
-                UpdateEditableTargets(value, null);
-
-                UpdateValidityState();
-            }
         }
 
         public IEnumerator<IDataEditor<TData>> GetEnumerator()
@@ -104,11 +119,11 @@ namespace Composite.Core
 
         private void UpdateValidityState()
         {
-            _validationState = TargetNullCheck.IsNull(_editableTarget)
+            ValidationState = TargetNullCheck.IsNull(_editableTarget)
                 ? default(TValidationResult)
                 : _validator.Validate(_editableTarget);
 
-            if (ValidationNullCheck.IsNull(_validationState))
+            if (ValidationNullCheck.IsNull(ValidationState))
             {
                 foreach (var validatedEditor in _editors.OfType<IValidatedDataEditor<TData, TValidationResult>>())
                 {
@@ -119,21 +134,27 @@ namespace Composite.Core
             {
                 foreach (var validatedEditor in _editors.OfType<IValidatedDataEditor<TData, TValidationResult>>())
                 {
-                    validatedEditor.UpdateValidationState(_validationState);
+                    validatedEditor.UpdateValidationState(ValidationState);
                 }
             }
         }
 
         private void UpdateEditorValidityState(IValidatedDataEditor<TData, TValidationResult> validatedEditor)
         {
-            if (ValidationNullCheck.IsNull(_validationState))
+            if (ValidationNullCheck.IsNull(ValidationState))
             {
                 validatedEditor.ClearValidationState();
             }
             else
             {
-                validatedEditor.UpdateValidationState(_validationState);
+                validatedEditor.UpdateValidationState(ValidationState);
             }
+        }
+
+        private void OnValidationStateUpdated()
+        {
+            var handler = ValidationStateUpdated;
+            if (handler != null) handler(this, EventArgs.Empty);
         }
     }
 }
