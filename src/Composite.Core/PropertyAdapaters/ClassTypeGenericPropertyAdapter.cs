@@ -20,7 +20,7 @@ namespace Composite.Core.PropertyAdapaters
             _valueGetter = getterExpression.Compile();
             _valueSetter = valueSetter;
 
-            _propertyName = GetPropertyName(getterExpression);
+            _propertyName = getterExpression.Body.GetPropertyName();
         }
 
         public string PropertyName
@@ -50,24 +50,6 @@ namespace Composite.Core.PropertyAdapaters
             _valueSetter(target, value);
 
             return target;
-        }
-
-        private static string GetPropertyName(Expression<Func<TEntity, TValue>> expression)
-        {
-            var body = expression.Body as MemberExpression;
-
-            if (body == null)
-            {
-                throw new ArgumentException("'expression' should be a property expression");
-            }
-
-            if (!(body.Expression is ParameterExpression))
-            {
-                const string message = "'expression' should be direct, properties nested to other objects are not supported (i.e. lambdas like v => vm.Object.Property)";
-                throw new ArgumentException(message);
-            }
-
-            return body.Member.Name;
         }
     }
 }
