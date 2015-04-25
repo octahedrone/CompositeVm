@@ -13,7 +13,7 @@ namespace Composite.Core.Tests.ClassTargetTests
         public void NullEditableTargetIsTolerated()
         {
             var editorComponent = new EditorComponent<string>();
-            var propertyAdapter = new EditableClassTextPropertyAdapter();
+            var propertyAdapter = EditableClassMetadata.TextProperty;
             var sut = new ScalarPropertyDataEditor<EditableClass, string, EditorComponent<string>>(propertyAdapter, editorComponent);
 
             // act
@@ -30,7 +30,7 @@ namespace Composite.Core.Tests.ClassTargetTests
         {
             var target = new EditableClass {Text = "Initial"};
             var editorComponent = new EditorComponent<string>();
-            var propertyAdapter = new EditableClassTextPropertyAdapter();
+            var propertyAdapter = EditableClassMetadata.TextProperty;
             var sut = new ScalarPropertyDataEditor<EditableClass, string, EditorComponent<string>>(propertyAdapter, editorComponent);
 
             // act
@@ -51,7 +51,7 @@ namespace Composite.Core.Tests.ClassTargetTests
             var target = new EditableClass {Text = "Invalid"};
 
             var editorComponent = Substitute.For<IEditorComponent<string>>();
-            var propertyAdapter = new EditableClassTextPropertyAdapter();
+            var propertyAdapter = EditableClassMetadata.TextProperty;
             var sut = new PropertyDataEditor<EditableClass, string>(propertyAdapter, editorComponent)
             {
                 EditableTarget = target
@@ -75,7 +75,7 @@ namespace Composite.Core.Tests.ClassTargetTests
             var target = new EditableClass {Text = "Invalid"};
 
             var editorComponent = Substitute.For<IEditorComponent<string>>();
-            var propertyAdapter = new EditableClassTextPropertyAdapter();
+            var propertyAdapter = EditableClassMetadata.TextProperty;
             var sut = new PropertyDataEditor<EditableClass, string>(propertyAdapter, editorComponent)
             {
                 EditableTarget = target
@@ -98,7 +98,7 @@ namespace Composite.Core.Tests.ClassTargetTests
 
             var target = new EditableClass {Text = "Initial"};
             var editorComponent = new EditorComponent<string>();
-            var propertyAdapter = new EditableClassTextPropertyAdapter();
+            var propertyAdapter = EditableClassMetadata.TextProperty;
             var sut = new ScalarPropertyDataEditor<EditableClass, string, EditorComponent<string>>(propertyAdapter, editorComponent);
 
             // act

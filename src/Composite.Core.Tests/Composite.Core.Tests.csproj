@@ -31,8 +31,9 @@
   <ItemGroup>
     <Compile Include="ClassTargetTests\DataEditorsManagerTests.cs" />
     <Compile Include="ClassTargetTests\StringPropertyDataEditorTests.cs" />
-    <Compile Include="ClassTargetTests\Target\EditableClassTextPropertyAdapter.cs" />
+    <Compile Include="ClassTargetTests\Target\EditableClassMetadata.cs" />
     <Compile Include="ClassTypeGenericPropertyAdapterTests.cs" />
+    <Compile Include="StructTargetTests\Target\EditableStructMetadata.cs" />
     <Compile Include="ValueTypeGenericPropertyAdapterTests.cs" />
     <Compile Include="StructTargetTests\DataEditorsManagerTests.cs" />
     <Compile Include="ClassTargetTests\Target\EditableClass.cs" />
@@ -42,7 +43,6 @@
     <Compile Include="TypeChecks\ValueTypeNullableCheckTests.cs" />
     <Compile Include="ValidationState.cs" />
     <Compile Include="IEditorComponent.cs" />
-    <Compile Include="StructTargetTests\Target\TextPropertyAdapter.cs" />
     <Compile Include="PropertyChangedBase.cs" />
     <Compile Include="EditorComponent.cs" />
     <Compile Include="EditorComponentTests.cs" />
