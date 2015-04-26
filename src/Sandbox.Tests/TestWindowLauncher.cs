@@ -18,6 +18,7 @@ namespace Sandbox.Tests
             if (dictionary != null)
                 window.Resources.MergedDictionaries.Add(dictionary);
 
+            window.SizeToContent = SizeToContent.WidthAndHeight;
             window.InvalidateVisual();
 
             window.ShowDialog();

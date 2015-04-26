@@ -1,0 +1,8 @@
+﻿<ResourceDictionary x:Class="Sandbox.Tests.Library.EditorComponentsResources"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:textEditor="clr-namespace:Sandbox.Tests.Library.TextEditor">
+    <DataTemplate DataType="{x:Type textEditor:TextEditorComponent}">
+        <TextBox Text="{Binding Path=Value}" IsReadOnly="{Binding Path=IsReadOnly, Mode=OneTime}" />
+    </DataTemplate>
+</ResourceDictionary>

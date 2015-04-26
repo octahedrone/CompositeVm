@@ -1,0 +1,14 @@
+﻿<ResourceDictionary x:Class="Sandbox.Tests.ModalDialogSamples.View.SampleUserEditorResources"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:library="clr-namespace:Sandbox.Tests.Library"
+             xmlns:viewModel="clr-namespace:Sandbox.Tests.ModalDialogSamples.ViewModel"
+             xmlns:view="clr-namespace:Sandbox.Tests.ModalDialogSamples.View">
+    <ResourceDictionary.MergedDictionaries>
+        <library:EditorComponentsResources/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <DataTemplate DataType="{x:Type viewModel:SampleUserEditorViewModel}">
+        <view:SampleUserEditorView DataContext="{Binding}" MinHeight="150" MinWidth="150"/>
+    </DataTemplate>
+</ResourceDictionary>
