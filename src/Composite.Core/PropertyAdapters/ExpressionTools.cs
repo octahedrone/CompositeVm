@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 
-namespace Composite.Core.PropertyAdapaters
+namespace Composite.Core.PropertyAdapters
 {
     public static class ExpressionTools
     {

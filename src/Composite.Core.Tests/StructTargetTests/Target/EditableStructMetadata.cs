@@ -1,4 +1,4 @@
-using Composite.Core.PropertyAdapaters;
+using Composite.Core.PropertyAdapters;
 
 namespace Composite.Core.Tests.StructTargetTests.Target
 {

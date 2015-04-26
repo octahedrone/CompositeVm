@@ -1,4 +1,4 @@
-﻿using Composite.Core.PropertyAdapaters;
+﻿using Composite.Core.PropertyAdapters;
 using Composite.Core.Tests.StructTargetTests.Target;
 using FluentAssertions;
 using NUnit.Framework;
