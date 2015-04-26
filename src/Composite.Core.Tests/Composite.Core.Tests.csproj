@@ -33,7 +33,9 @@
     <Compile Include="ClassTargetTests\StringPropertyDataEditorTests.cs" />
     <Compile Include="ClassTargetTests\Target\EditableClassMetadata.cs" />
     <Compile Include="ClassTypeGenericPropertyAdapterTests.cs" />
+    <Compile Include="ScalarPropertyDataEditor.cs" />
     <Compile Include="StructTargetTests\Target\EditableStructMetadata.cs" />
+    <Compile Include="ValidationStateAdapter.cs" />
     <Compile Include="ValueTypeGenericPropertyAdapterTests.cs" />
     <Compile Include="StructTargetTests\DataEditorsManagerTests.cs" />
     <Compile Include="ClassTargetTests\Target\EditableClass.cs" />

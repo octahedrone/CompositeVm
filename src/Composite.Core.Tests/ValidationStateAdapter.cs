@@ -1,0 +1,11 @@
+namespace Composite.Core.Tests
+{
+    public static class ValidationStateAdapter
+    {
+        public static string GetPropertyError(string property, ValidationState state)
+        {
+            string error;
+            return state.TryGetPropertyError(property, out error) ? error : null;
+        }
+    }
+}

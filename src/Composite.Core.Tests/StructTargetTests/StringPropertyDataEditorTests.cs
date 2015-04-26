@@ -51,7 +51,7 @@ namespace Composite.Core.Tests.StructTargetTests
 
             var editorComponent = Substitute.For<IEditorComponent<string>>();
             var propertyAdapter = EditableStructMetadata.TextProperty;
-            var sut = new PropertyDataEditor<EditableStruct, string>(propertyAdapter, editorComponent)
+            var sut = new PropertyDataEditor<EditableStruct, string, ValidationState>(propertyAdapter, editorComponent, ValidationStateAdapter.GetPropertyError)
             {
                 EditableTarget = target
             };
@@ -75,7 +75,7 @@ namespace Composite.Core.Tests.StructTargetTests
 
             var editorComponent = Substitute.For<IEditorComponent<string>>();
             var propertyAdapter = EditableStructMetadata.TextProperty;
-            var sut = new PropertyDataEditor<EditableStruct, string>(propertyAdapter, editorComponent)
+            var sut = new PropertyDataEditor<EditableStruct, string, ValidationState>(propertyAdapter, editorComponent, ValidationStateAdapter.GetPropertyError)
             {
                 EditableTarget = target
             };

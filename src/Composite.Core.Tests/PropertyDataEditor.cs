@@ -3,21 +3,25 @@ using Composite.Core.TypeChecks;
 
 namespace Composite.Core.Tests
 {
-    public class PropertyDataEditor<TData, TValue> : IValidatedDataEditor<TData, ValidationState>
+    public class PropertyDataEditor<TData, TValue, TValidationState> : IValidatedDataEditor<TData, TValidationState>
     {
         private static readonly INullableCheck<TData> TargetNullCheck = ValueChecks.GetNullableCheck<TData>();
 
         private readonly IEditorComponent<TValue> _component;
         private readonly IPropertyAdapter<TData, TValue> _propertyAdapter;
+        private readonly Func<string, TValidationState, string> _propertyErrorProvider;
 
         private TData _editableTarget;
 
-        public PropertyDataEditor(IPropertyAdapter<TData, TValue> propertyAdapter, IEditorComponent<TValue> component)
+        public PropertyDataEditor(IPropertyAdapter<TData, TValue> propertyAdapter, IEditorComponent<TValue> component, Func<string, TValidationState, string> propertyErrorProvider)
         {
             if (propertyAdapter == null) throw new ArgumentNullException("propertyAdapter");
+            if (component == null) throw new ArgumentNullException("component");
+            if (propertyErrorProvider == null) throw new ArgumentNullException("propertyErrorProvider");
 
             _propertyAdapter = propertyAdapter;
             _component = component;
+            _propertyErrorProvider = propertyErrorProvider;
 
             _component.ValueUpdated += OnComponentUpdatedValue;
 
@@ -68,10 +72,9 @@ namespace Composite.Core.Tests
                 handler(this, new PropertyUpdatedEventArgs(targetPropertyName));
         }
 
-        public void UpdateValidationState(ValidationState state)
+        public void UpdateValidationState(TValidationState state)
         {
-            string error;
-            state.TryGetPropertyError(_propertyAdapter.PropertyName, out error);
+            var error = _propertyErrorProvider(_propertyAdapter.PropertyName, state);
 
             _component.SetError(error);
         }
@@ -79,23 +82,6 @@ namespace Composite.Core.Tests
         public void ClearValidationState()
         {
             _component.SetError(null);
-        }
-    }
-
-    public class ScalarPropertyDataEditor<TData, TValue, TComponent> : PropertyDataEditor<TData, TValue>
-        where TComponent : IEditorComponent<TValue>
-    {
-        private readonly TComponent _component;
-
-        public ScalarPropertyDataEditor(IPropertyAdapter<TData, TValue> propertyAdapter, TComponent component)
-            : base(propertyAdapter, component)
-        {
-            _component = component;
-        }
-
-        public new TComponent Component
-        {
-            get { return _component; }
         }
     }
 }
