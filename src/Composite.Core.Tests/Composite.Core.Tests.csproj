@@ -45,7 +45,6 @@
     <Compile Include="TypeChecks\ValueTypeNullableCheckTests.cs" />
     <Compile Include="ValidationState.cs" />
     <Compile Include="PropertyChangedBase.cs" />
-    <Compile Include="EditorComponent.cs" />
     <Compile Include="EditorComponentTests.cs" />
     <Compile Include="StructTargetTests\StringPropertyDataEditorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

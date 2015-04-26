@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Composite.Core.PropertyEditors;
 
-namespace Composite.Core.Tests
+namespace Composite.Core.PropertyEditors
 {
-    public class EditorComponent<TValue> : PropertyChangedBase, IEditorComponent<TValue>, IDataErrorInfo
+    public class EditorComponent<TValue> : IEditorComponent<TValue>, IDataErrorInfo, INotifyPropertyChanged
     {
         private TValue _value;
         private string _error;
@@ -56,6 +55,8 @@ namespace Composite.Core.Tests
             }
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public event EventHandler<EventArgs> ValueUpdated;
 
         void IEditorComponent<TValue>.SetReadOnly(bool readOnly)
@@ -95,6 +96,14 @@ namespace Composite.Core.Tests
         {
             var handler = ValueUpdated;
             if (handler != null) handler(this, EventArgs.Empty);
+        }
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            var handler = PropertyChanged;
+
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
         string IDataErrorInfo.this[string columnName]
