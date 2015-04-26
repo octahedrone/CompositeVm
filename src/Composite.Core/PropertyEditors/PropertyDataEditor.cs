@@ -1,7 +1,7 @@
 using System;
 using Composite.Core.TypeChecks;
 
-namespace Composite.Core.Tests
+namespace Composite.Core.PropertyEditors
 {
     public class PropertyDataEditor<TData, TValue, TValidationState> : IValidatedDataEditor<TData, TValidationState>
     {

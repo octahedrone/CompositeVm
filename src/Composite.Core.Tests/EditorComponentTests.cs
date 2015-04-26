@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using Composite.Core.PropertyEditors;
 using FluentAssertions;
 using NUnit.Framework;
 

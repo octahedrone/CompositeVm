@@ -1,6 +1,6 @@
 using System;
 
-namespace Composite.Core.Tests
+namespace Composite.Core.PropertyEditors
 {
     public interface IEditorComponent<TValue>
     {

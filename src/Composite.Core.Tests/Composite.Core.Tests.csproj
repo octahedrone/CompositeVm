@@ -44,7 +44,6 @@
     <Compile Include="TypeChecks\ValueChecksTests.cs" />
     <Compile Include="TypeChecks\ValueTypeNullableCheckTests.cs" />
     <Compile Include="ValidationState.cs" />
-    <Compile Include="IEditorComponent.cs" />
     <Compile Include="PropertyChangedBase.cs" />
     <Compile Include="EditorComponent.cs" />
     <Compile Include="EditorComponentTests.cs" />
@@ -53,7 +52,6 @@
     <Compile Include="$(SolutionDir)CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="PropertyDataEditor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

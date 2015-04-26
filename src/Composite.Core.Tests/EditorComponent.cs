@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Composite.Core.PropertyEditors;
 
 namespace Composite.Core.Tests
 {

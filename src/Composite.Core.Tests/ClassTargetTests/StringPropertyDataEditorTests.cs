@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Composite.Core.PropertyEditors;
 using Composite.Core.Tests.ClassTargetTests.Target;
 using FluentAssertions;
 using NSubstitute;

@@ -1,3 +1,5 @@
+using Composite.Core.PropertyEditors;
+
 namespace Composite.Core.Tests
 {
     public class ScalarPropertyDataEditor<TData, TValue, TComponent> : PropertyDataEditor<TData, TValue, ValidationState>
