@@ -33,7 +33,11 @@
     <Compile Include="ClassTargetTests\StringPropertyDataEditorTests.cs" />
     <Compile Include="ClassTargetTests\Target\EditableClassMetadata.cs" />
     <Compile Include="ClassTypeGenericPropertyAdapterTests.cs" />
+    <Compile Include="ListDataEditor.cs" />
+    <Compile Include="StructTargetTests\ListDataEditorTests.cs" />
     <Compile Include="ScalarPropertyDataEditor.cs" />
+    <Compile Include="StructTargetTests\Target\ContainerStruct.cs" />
+    <Compile Include="StructTargetTests\Target\ContainerStructMetadata.cs" />
     <Compile Include="StructTargetTests\Target\EditableStructMetadata.cs" />
     <Compile Include="ValidationStateAdapter.cs" />
     <Compile Include="ValueTypeGenericPropertyAdapterTests.cs" />
