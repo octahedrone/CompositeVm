@@ -6,6 +6,6 @@ namespace Composite.Core
     {
         TData EditableTarget { get; set; }
 
-        event EventHandler<PropertyUpdatedEventArgs> TargetUpdated;
+        event EventHandler<EventArgs> TargetUpdated;
     }
 }

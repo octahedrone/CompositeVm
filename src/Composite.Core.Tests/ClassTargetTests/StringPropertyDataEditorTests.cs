@@ -124,8 +124,7 @@ namespace Composite.Core.Tests.ClassTargetTests
 
             // assert
             sut.ShouldRaise("TargetUpdated")
-                .WithSender(sut)
-                .WithArgs<PropertyUpdatedEventArgs>(args => args.PropertyName == "Text");
+                .WithSender(sut);
 
             sut.Component.Value.Should().Be(updatedValue);
         }

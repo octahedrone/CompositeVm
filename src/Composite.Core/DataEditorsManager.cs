@@ -91,7 +91,7 @@ namespace Composite.Core
             return GetEnumerator();
         }
 
-        private void OnEditorUpdatesTarget(object sender, PropertyUpdatedEventArgs e)
+        private void OnEditorUpdatesTarget(object sender, EventArgs e)
         {
             var updater = sender as IDataEditor<TData>;
 

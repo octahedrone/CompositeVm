@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Composite.Core.Tests.StructTargetTests.Target;
 using FluentAssertions;
 using NSubstitute;
@@ -114,14 +115,12 @@ namespace Composite.Core.Tests.StructTargetTests
 
             implicitSut.MonitorEvents();
 
-            var args = new PropertyUpdatedEventArgs("Text");
             sut.ItemEditors[0].EditableTarget = new EditableStruct{Text = "B"};
-            sut.ItemEditors[0].TargetUpdated += Raise.EventWith(args);
+            sut.ItemEditors[0].TargetUpdated += Raise.EventWith(EventArgs.Empty);
 
             // assert
             implicitSut.ShouldRaise("TargetUpdated")
-                .WithSender(sut)
-                .WithArgs<PropertyUpdatedEventArgs>(a => a.PropertyName == ContainerStructMetadata.ItemsProperty.PropertyName);
+                .WithSender(sut);
 
             target.Items[0].Text.Should().Be("B");
         }
@@ -144,12 +143,11 @@ namespace Composite.Core.Tests.StructTargetTests
             // act
             implicitSut.EditableTarget = target;
 
-            var args = new PropertyUpdatedEventArgs("Text");
             var itemEditor = sut.ItemEditors[0] as IValidatedDataEditor<EditableStruct, ValidationState>;
             itemEditor.Should().NotBeNull();
 
             itemEditor.EditableTarget = new EditableStruct{Text = "B"};
-            itemEditor.TargetUpdated += Raise.EventWith(args);
+            itemEditor.TargetUpdated += Raise.EventWith(EventArgs.Empty);
 
             // assert
             target.Items[0].Text.Should().Be("B");

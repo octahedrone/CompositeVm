@@ -84,7 +84,7 @@ namespace Composite.Core.Tests
             }
         }
 
-        public event EventHandler<PropertyUpdatedEventArgs> TargetUpdated;
+        public event EventHandler<EventArgs> TargetUpdated;
 
         void IValidatedDataEditor<TData, TValidationState>.UpdateValidationState(TValidationState state)
         {
@@ -130,7 +130,7 @@ namespace Composite.Core.Tests
             }
         }
 
-        void OnItemUpdated(object sender, PropertyUpdatedEventArgs e)
+        void OnItemUpdated(object sender, EventArgs e)
         {
             var itemEditor = (IDataEditor<TItem>)sender;
 
@@ -153,7 +153,7 @@ namespace Composite.Core.Tests
 
             var handler = TargetUpdated;
             if (handler != null) 
-                handler(this, new PropertyUpdatedEventArgs(_propertyAdapter.PropertyName));
+                handler(this, EventArgs.Empty);
         }
     }
 }

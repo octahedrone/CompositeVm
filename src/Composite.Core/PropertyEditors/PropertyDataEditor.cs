@@ -48,7 +48,7 @@ namespace Composite.Core.PropertyEditors
             get { return _component; }
         }
 
-        public event EventHandler<PropertyUpdatedEventArgs> TargetUpdated;
+        public event EventHandler<EventArgs> TargetUpdated;
 
         private void OnComponentUpdatedValue(object sender, EventArgs e)
         {
@@ -61,15 +61,15 @@ namespace Composite.Core.PropertyEditors
 
             _editableTarget = _propertyAdapter.SetValue(_editableTarget, newValue);
 
-            OnTargetUpdated(_propertyAdapter.PropertyName);
+            OnTargetUpdated();
         }
 
-        private void OnTargetUpdated(string targetPropertyName)
+        private void OnTargetUpdated()
         {
             var handler = TargetUpdated;
 
             if (handler != null)
-                handler(this, new PropertyUpdatedEventArgs(targetPropertyName));
+                handler(this, EventArgs.Empty);
         }
 
         public void UpdateValidationState(TValidationState state)

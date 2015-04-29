@@ -164,8 +164,7 @@ namespace Composite.Core.Tests.StructTargetTests
             var updatedTarget = new EditableStruct { Text = "Updated" };
             editorB.EditableTarget = updatedTarget;
 
-            var args = new PropertyUpdatedEventArgs("Text");
-            editorB.TargetUpdated += Raise.EventWith(args);
+            editorB.TargetUpdated += Raise.EventWith(EventArgs.Empty);
 
             // assert
             _comparer.Equals(editorA.EditableTarget, updatedTarget).Should().BeTrue();
@@ -195,8 +194,7 @@ namespace Composite.Core.Tests.StructTargetTests
             var updatedTarget = new EditableStruct { Text = "Updated" };
             editorB.EditableTarget = updatedTarget;
 
-            var args = new PropertyUpdatedEventArgs("Text");
-            editorB.TargetUpdated += Raise.EventWith(args);
+            editorB.TargetUpdated += Raise.EventWith(EventArgs.Empty);
 
             // assert
             _sut.ShouldRaise("ValidationStateUpdated")
@@ -230,7 +228,7 @@ namespace Composite.Core.Tests.StructTargetTests
             var updatedTarget = new EditableStruct { Text = "Updated" };
             editorB.EditableTarget = updatedTarget;
 
-            var args = new PropertyUpdatedEventArgs("Text");
+            var args = EventArgs.Empty;
             editorB.TargetUpdated += Raise.EventWith(args);
 
             // assert
@@ -264,8 +262,7 @@ namespace Composite.Core.Tests.StructTargetTests
 
             _sut.EditableTarget = updatedTarget;
 
-            var args = new PropertyUpdatedEventArgs("Text");
-            editorB.TargetUpdated += Raise.EventWith(args);
+            editorB.TargetUpdated += Raise.EventWith(EventArgs.Empty);
 
             // assert
             _comparer.Equals(editorB.EditableTarget, target).Should().BeTrue();

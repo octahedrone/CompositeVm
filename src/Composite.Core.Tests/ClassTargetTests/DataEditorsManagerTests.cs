@@ -123,7 +123,7 @@ namespace Composite.Core.Tests.ClassTargetTests
         [Test]
         public void ManagersValidityStateIsUpdatedOnTargetUpdate()
         {
-            var target = new EditableClass { Text = "Initial" };
+            var target = new EditableClass {Text = "Initial"};
 
             var state = ValidationState.Valid;
             var validator = CreateValidator(state);
@@ -143,7 +143,7 @@ namespace Composite.Core.Tests.ClassTargetTests
         [Test]
         public void EditorsTargetIsNulledWhenManagersIsNulled()
         {
-            var target = new EditableClass { Text = "Initial" };
+            var target = new EditableClass {Text = "Initial"};
 
             var editorA = Substitute.For<IDataEditor<EditableClass>>();
             editorA.EditableTarget = target;
@@ -204,8 +204,7 @@ namespace Composite.Core.Tests.ClassTargetTests
             _sut.EditableTarget = null;
 
             // act
-            var args = new PropertyUpdatedEventArgs("Text");
-            editorB.TargetUpdated += Raise.EventWith(args);
+            editorB.TargetUpdated += Raise.EventWith(EventArgs.Empty);
 
             // assert
             editorA.EditableTarget.Should().BeNull();
@@ -230,10 +229,10 @@ namespace Composite.Core.Tests.ClassTargetTests
             _sut.EditableTarget = target;
 
             // act
-            var updatedTarget = new EditableClass { Text = "Updated" };
+            var updatedTarget = new EditableClass {Text = "Updated"};
             editorB.EditableTarget = updatedTarget;
 
-            var args = new PropertyUpdatedEventArgs("Text");
+            var args = EventArgs.Empty;
             editorB.TargetUpdated += Raise.EventWith(args);
 
             // assert
@@ -260,10 +259,10 @@ namespace Composite.Core.Tests.ClassTargetTests
             // act
             _sut.MonitorEvents();
 
-            var updatedTarget = new EditableClass { Text = "Updated" };
+            var updatedTarget = new EditableClass {Text = "Updated"};
             editorB.EditableTarget = updatedTarget;
 
-            var args = new PropertyUpdatedEventArgs("Text");
+            var args = EventArgs.Empty;
             editorB.TargetUpdated += Raise.EventWith(args);
 
             // assert
@@ -294,10 +293,10 @@ namespace Composite.Core.Tests.ClassTargetTests
             // act
             editorB.ClearReceivedCalls();
 
-            var updatedTarget = new EditableClass { Text = "Updated" };
+            var updatedTarget = new EditableClass {Text = "Updated"};
             editorB.EditableTarget = updatedTarget;
 
-            var args = new PropertyUpdatedEventArgs("Text");
+            var args = EventArgs.Empty;
             editorB.TargetUpdated += Raise.EventWith(args);
 
             // assert
@@ -324,14 +323,14 @@ namespace Composite.Core.Tests.ClassTargetTests
             _sut.EditableTarget = target;
 
             // act
-            var updatedTarget = new EditableClass { Text = "Updated" };
+            var updatedTarget = new EditableClass {Text = "Updated"};
 
             _sut.Remove(editorB);
             editorB.ClearReceivedCalls();
 
             _sut.EditableTarget = updatedTarget;
 
-            var args = new PropertyUpdatedEventArgs("Text");
+            var args = EventArgs.Empty;
             editorB.TargetUpdated += Raise.EventWith(args);
 
             // assert
