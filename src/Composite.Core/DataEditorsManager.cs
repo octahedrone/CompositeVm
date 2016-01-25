@@ -36,7 +36,7 @@ namespace Composite.Core
             {
                 UpdateEditableTargets(value, null);
 
-                UpdateValidityState();
+                UpdateValidityState(_editableTarget, _editors.OfType<IValidatedComponent<TValidationResult>>());
             }
         }
 
@@ -102,7 +102,7 @@ namespace Composite.Core
 
             UpdateEditableTargets(updater.EditableTarget, updater);
 
-            UpdateValidityState();
+            UpdateValidityState(_editableTarget, _editors.OfType<IValidatedComponent<TValidationResult>>());
         }
 
         private void UpdateEditableTargets(TData target, IDataEditor<TData> exception)
@@ -117,15 +117,16 @@ namespace Composite.Core
             }
         }
 
-        private void UpdateValidityState()
+        private void UpdateValidityState(TData editableTarget, 
+            IEnumerable<IValidatedComponent<TValidationResult>> validatedComponents)
         {
-            ValidationState = TargetNullCheck.IsNull(_editableTarget)
+            ValidationState = TargetNullCheck.IsNull(editableTarget)
                 ? default(TValidationResult)
-                : _validator.Validate(_editableTarget);
+                : _validator.Validate(editableTarget);
 
             if (ValidationNullCheck.IsNull(ValidationState))
             {
-                foreach (var validatedEditor in _editors.OfType<IValidatedComponent<TValidationResult>>())
+                foreach (var validatedEditor in validatedComponents)
                 {
                     validatedEditor.ClearValidationState();
                 }

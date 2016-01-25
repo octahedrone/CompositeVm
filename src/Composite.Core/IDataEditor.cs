@@ -2,12 +2,12 @@
 
 namespace Composite.Core
 {
-    public interface IDataBrowser<TData>
+    public interface IDataComponent<TData>
     {
         TData EditableTarget { get; set; }
     }
 
-    public interface IDataEditor<TData> : IDataBrowser<TData>
+    public interface IDataEditor<TData> : IDataComponent<TData>
     {
         event EventHandler<EventArgs> TargetUpdated;
     }
