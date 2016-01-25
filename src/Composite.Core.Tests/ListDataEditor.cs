@@ -35,7 +35,7 @@ namespace Composite.Core.Tests
 
         public ObservableCollection<IDataEditor<TItem>> ItemEditors { get; private set; }
 
-        TData IDataEditor<TData>.EditableTarget
+        TData IDataBrowser<TData>.EditableTarget
         {
             get { return _editableTarget; }
             set

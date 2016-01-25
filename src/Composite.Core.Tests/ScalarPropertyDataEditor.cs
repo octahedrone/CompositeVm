@@ -13,8 +13,6 @@ namespace Composite.Core.Tests
             _component = component;
         }
 
-
-
         public new TComponent Component
         {
             get { return _component; }
