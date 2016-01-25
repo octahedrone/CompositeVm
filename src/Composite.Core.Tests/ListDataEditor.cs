@@ -7,7 +7,7 @@ using Composite.Core.TypeChecks;
 namespace Composite.Core.Tests
 {
     public class ListDataEditor<TData, TValidationState, TItem, TItemValidationState>
-        : IDataEditor<TData>, IValidatedDataEditor<TValidationState>
+        : IDataEditor<TData>, IValidatedComponent<TValidationState>
     {
         private static readonly INullableCheck<TData> TargetNullCheck = ValueChecks.GetNullableCheck<TData>();
         private static readonly INullableCheck<TValidationState> ValidityNullCheck = ValueChecks.GetNullableCheck<TValidationState>();
@@ -86,18 +86,18 @@ namespace Composite.Core.Tests
 
         public event EventHandler<EventArgs> TargetUpdated;
 
-        void IValidatedDataEditor<TValidationState>.UpdateValidationState(TValidationState state)
+        void IValidatedComponent<TValidationState>.UpdateValidationState(TValidationState state)
         {
             if (ValidityNullCheck.IsNull(state))
             {
-                ((IValidatedDataEditor<TValidationState>) this).ClearValidationState();
+                ((IValidatedComponent<TValidationState>) this).ClearValidationState();
 
                 return;
             }
 
             foreach (var itemEditor in ItemEditors)
             {
-                var validatedItemEditor = itemEditor as IValidatedDataEditor<TItemValidationState>;
+                var validatedItemEditor = itemEditor as IValidatedComponent<TItemValidationState>;
                 
                 if (validatedItemEditor == null)
                     continue;
@@ -115,9 +115,9 @@ namespace Composite.Core.Tests
             }
         }
 
-        void IValidatedDataEditor<TValidationState>.ClearValidationState()
+        void IValidatedComponent<TValidationState>.ClearValidationState()
         {
-            foreach (var itemEditor in ItemEditors.OfType<IValidatedDataEditor<TItemValidationState>>())
+            foreach (var itemEditor in ItemEditors.OfType<IValidatedComponent<TItemValidationState>>())
             {
                 itemEditor.ClearValidationState();
             }

@@ -20,7 +20,7 @@
     <Compile Include="DataEditorsManager.cs" />
     <Compile Include="IDataEditor.cs" />
     <Compile Include="IPropertyAdapter.cs" />
-    <Compile Include="IValidatedDataEditor.cs" />
+    <Compile Include="IValidatedComponent.cs" />
     <Compile Include="PropertyAdapters\ClassTypeGenericPropertyAdapter.cs" />
     <Compile Include="PropertyAdapters\ExpressionTools.cs" />
     <Compile Include="PropertyAdapters\ValueTypeGenericPropertyAdapter.cs" />

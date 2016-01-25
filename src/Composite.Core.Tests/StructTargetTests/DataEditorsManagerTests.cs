@@ -48,8 +48,8 @@ namespace Composite.Core.Tests.StructTargetTests
             var target = new EditableStruct {Text = "Initial"};
 
             var editorA = Substitute.For<IDataEditor<EditableStruct>>();
-            var editorB = Substitute.For<IDataEditor<EditableStruct>, IValidatedDataEditor<ValidationState>>();
-            var validatedEditorB = (IValidatedDataEditor<ValidationState>)editorB;
+            var editorB = Substitute.For<IDataEditor<EditableStruct>, IValidatedComponent<ValidationState>>();
+            var validatedEditorB = (IValidatedComponent<ValidationState>)editorB;
 
             var state = ValidationState.Valid;
             var validator = CreateValidator(state);
@@ -105,8 +105,8 @@ namespace Composite.Core.Tests.StructTargetTests
             var target = new EditableStruct {Text = "Initial"};
 
             var editorA = Substitute.For<IDataEditor<EditableStruct>>();
-            var editorB = Substitute.For<IDataEditor<EditableStruct>, IValidatedDataEditor<ValidationState>>();
-            var validatedEditorB = (IValidatedDataEditor<ValidationState>) editorB;
+            var editorB = Substitute.For<IDataEditor<EditableStruct>, IValidatedComponent<ValidationState>>();
+            var validatedEditorB = (IValidatedComponent<ValidationState>) editorB;
 
             var state = ValidationState.Valid;
             var validator = CreateValidator(state);
@@ -211,8 +211,8 @@ namespace Composite.Core.Tests.StructTargetTests
             var target = new EditableStruct {Text = "Initial"};
 
             var editorA = Substitute.For<IDataEditor<EditableStruct>>();
-            var editorB = Substitute.For<IDataEditor<EditableStruct>, IValidatedDataEditor<ValidationState>>();
-            var validatedEditorB = (IValidatedDataEditor<ValidationState>)editorB;
+            var editorB = Substitute.For<IDataEditor<EditableStruct>, IValidatedComponent<ValidationState>>();
+            var validatedEditorB = (IValidatedComponent<ValidationState>)editorB;
 
             var state = ValidationState.Valid;
             var validator = CreateValidator(state);
@@ -244,8 +244,8 @@ namespace Composite.Core.Tests.StructTargetTests
             var target = new EditableStruct {Text = "Initial"};
 
             var editorA = Substitute.For<IDataEditor<EditableStruct>>();
-            var editorB = Substitute.For<IDataEditor<EditableStruct>, IValidatedDataEditor<ValidationState>>();
-            var validatedEditorB = (IValidatedDataEditor<ValidationState>)editorB;
+            var editorB = Substitute.For<IDataEditor<EditableStruct>, IValidatedComponent<ValidationState>>();
+            var validatedEditorB = (IValidatedComponent<ValidationState>)editorB;
 
             var state = ValidationState.Valid;
             var validator = CreateValidator(state);
