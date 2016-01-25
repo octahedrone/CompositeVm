@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace Composite.Core.PropertyEditors
 {
-    public class EditorComponent<TValue> : IEditorComponent<TValue>, IDataErrorInfo, INotifyPropertyChanged
+    public class EditorComponentVM<TValue> : IEditorComponent<TValue>, IDataErrorInfo, INotifyPropertyChanged
     {
         private TValue _value;
         private string _error;
@@ -12,12 +12,12 @@ namespace Composite.Core.PropertyEditors
         private readonly IEqualityComparer<TValue> _valueComparer;
         private bool _isReadOnly;
 
-        public EditorComponent()
+        public EditorComponentVM()
             : this(EqualityComparer<TValue>.Default)
         {
         }
 
-        public EditorComponent(IEqualityComparer<TValue> valueComparer)
+        public EditorComponentVM(IEqualityComparer<TValue> valueComparer)
         {
             if (valueComparer == null) throw new ArgumentNullException("valueComparer");
 

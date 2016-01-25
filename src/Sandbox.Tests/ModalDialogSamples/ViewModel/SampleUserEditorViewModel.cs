@@ -20,7 +20,7 @@ namespace Sandbox.Tests.ModalDialogSamples.ViewModel
 
         private void InitializeEditors()
         {
-            NameEditor = new TextEditorComponent();
+            NameEditor = new TextEditorComponentVM();
 
             var propertyAdapter = SampleUserMetadata.NameProperty;
             var namePropertyEditor = new PropertyDataEditor<SampleUser, string, ValidationState>(propertyAdapter,
@@ -30,7 +30,7 @@ namespace Sandbox.Tests.ModalDialogSamples.ViewModel
             _editors.Add(namePropertyEditor);
         }
 
-        public TextEditorComponent NameEditor { get; private set; }
+        public TextEditorComponentVM NameEditor { get; private set; }
 
         public SampleUser Data
         {

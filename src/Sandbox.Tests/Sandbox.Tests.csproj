@@ -25,8 +25,8 @@
     <Compile Include="Library\EditorComponentsResources.xaml.cs">
       <DependentUpon>EditorComponentsResources.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Library\TextEditor\TextEditorComponent.cs" />
-    <Compile Include="ModalDialogSamples\ModalDialogSampleRunner.cs" />
+    <Compile Include="Library\TextEditor\TextEditorComponentVM.cs" />
+    <Compile Include="ModalDialogSamples\SampleUserEditorRunner.cs" />
     <Compile Include="ModalDialogSamples\Model\SampleUser.cs" />
     <Compile Include="ModalDialogSamples\Model\SampleUserValidator.cs" />
     <Compile Include="ModalDialogSamples\ViewModel\ModelAdapters\SampleUserMetadata.cs" />

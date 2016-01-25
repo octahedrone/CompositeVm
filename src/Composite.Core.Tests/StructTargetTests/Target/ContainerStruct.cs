@@ -13,12 +13,4 @@ namespace Composite.Core.Tests.StructTargetTests.Target
 
         public EditableStruct[] Items { get; private set; }
     }
-
-    public class ContainerStructValiditiState
-    {
-        public ValidationState GetStateFor(EditableStruct item)
-        {
-            return ValidationState.Valid;
-        }
-    }
 }

@@ -7,12 +7,12 @@ using NUnit.Framework;
 namespace Composite.Core.Tests
 {
     [TestFixture]
-    public class EditorComponentTests
+    public class EditorComponentVMTests
     {
         [Test]
         public void WhatWasSetIsWhatValueReturns()
         {
-            var sut = new EditorComponent<string>();
+            var sut = new EditorComponentVM<string>();
             var implicitSut = (IEditorComponent<string>) sut;
 
             const string sample = "sample";
@@ -27,7 +27,7 @@ namespace Composite.Core.Tests
         [Test]
         public void NonEmptyErrorMessageValueIsWhatErrorInterfaceReturns()
         {
-            var sut = new EditorComponent<string>();
+            var sut = new EditorComponentVM<string>();
             var implicitSut = (IDataErrorInfo) sut;
 
             const string error = "error";
@@ -43,7 +43,7 @@ namespace Composite.Core.Tests
         [Test]
         public void NullErrorMessageValueIsWhatErrorInterfaceReturns()
         {
-            var sut = new EditorComponent<string>();
+            var sut = new EditorComponentVM<string>();
             var implicitSut = (IDataErrorInfo) sut;
 
             const string error = "error";
@@ -60,7 +60,7 @@ namespace Composite.Core.Tests
         [Test]
         public void EmptyErrorMessageValueIsWhatErrorInterfaceReturns()
         {
-            var sut = new EditorComponent<string>();
+            var sut = new EditorComponentVM<string>();
             var implicitSut = (IDataErrorInfo) sut;
 
             const string error = "error";
@@ -77,7 +77,7 @@ namespace Composite.Core.Tests
         [Test]
         public void SetValueRaisesPropertyChangeNotification()
         {
-            var sut = new EditorComponent<string>();
+            var sut = new EditorComponentVM<string>();
             var implicitSut = (IEditorComponent<string>) sut;
 
             const string sample = "sample";
@@ -93,7 +93,7 @@ namespace Composite.Core.Tests
         [Test]
         public void SetErrorRaisesPropertyChangeNotification()
         {
-            var sut = new EditorComponent<string>();
+            var sut = new EditorComponentVM<string>();
 
             const string error = "error";
 
@@ -108,7 +108,7 @@ namespace Composite.Core.Tests
         [Test]
         public void WhatWasAssignedToValueIsWhatGetValueReturns()
         {
-            var sut = new EditorComponent<string>();
+            var sut = new EditorComponentVM<string>();
             var implicitSut = (IEditorComponent<string>) sut;
 
             const string sample = "sample";
@@ -123,7 +123,7 @@ namespace Composite.Core.Tests
         [Test]
         public void AssignedValueCausesEventToBeRaised()
         {
-            var sut = new EditorComponent<string>();
+            var sut = new EditorComponentVM<string>();
             var implicitSut = (IEditorComponent<string>) sut;
 
             const string sample = "sample";
@@ -141,7 +141,7 @@ namespace Composite.Core.Tests
         [Test]
         public void EventIsRaisedWhenReadOnlyStateIsUpdated()
         {
-            var sut = new EditorComponent<string>();
+            var sut = new EditorComponentVM<string>();
             var implicitSut = (IEditorComponent<string>) sut;
 
             const bool isReadOnly = true;

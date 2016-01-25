@@ -13,11 +13,11 @@ namespace Composite.Core.Tests.ClassTargetTests
         [Test]
         public void ReadonlyStateIsAssignedToComponent()
         {
-            var editorComponent = new EditorComponent<string>();
+            var editorComponent = new EditorComponentVM<string>();
             var propertyAdapter = EditableClassMetadata.ReadonlyTextProperty;
             
             // act
-            var sut = new ScalarPropertyDataEditor<EditableClass, string, EditorComponent<string>>(propertyAdapter, editorComponent);
+            var sut = new ScalarPropertyDataEditor<EditableClass, string, EditorComponentVM<string>>(propertyAdapter, editorComponent);
 
             // assert
             sut.Component.IsReadOnly.Should().Be(EditableClassMetadata.ReadonlyTextProperty.IsReadOnly);
@@ -26,9 +26,9 @@ namespace Composite.Core.Tests.ClassTargetTests
         [Test]
         public void NullEditableTargetIsTolerated()
         {
-            var editorComponent = new EditorComponent<string>();
+            var editorComponent = new EditorComponentVM<string>();
             var propertyAdapter = EditableClassMetadata.TextProperty;
-            var sut = new ScalarPropertyDataEditor<EditableClass, string, EditorComponent<string>>(propertyAdapter, editorComponent);
+            var sut = new ScalarPropertyDataEditor<EditableClass, string, EditorComponentVM<string>>(propertyAdapter, editorComponent);
 
             // act
             sut.Component.MonitorEvents();
@@ -43,9 +43,9 @@ namespace Composite.Core.Tests.ClassTargetTests
         public void ValueUpdateChangeReportedOnTargetUpdate()
         {
             var target = new EditableClass {Text = "Initial"};
-            var editorComponent = new EditorComponent<string>();
+            var editorComponent = new EditorComponentVM<string>();
             var propertyAdapter = EditableClassMetadata.TextProperty;
-            var sut = new ScalarPropertyDataEditor<EditableClass, string, EditorComponent<string>>(propertyAdapter, editorComponent);
+            var sut = new ScalarPropertyDataEditor<EditableClass, string, EditorComponentVM<string>>(propertyAdapter, editorComponent);
 
             // act
             sut.Component.MonitorEvents();
@@ -111,9 +111,9 @@ namespace Composite.Core.Tests.ClassTargetTests
             const string updatedValue = "Updated";
 
             var target = new EditableClass {Text = "Initial"};
-            var editorComponent = new EditorComponent<string>();
+            var editorComponent = new EditorComponentVM<string>();
             var propertyAdapter = EditableClassMetadata.TextProperty;
-            var sut = new ScalarPropertyDataEditor<EditableClass, string, EditorComponent<string>>(propertyAdapter, editorComponent);
+            var sut = new ScalarPropertyDataEditor<EditableClass, string, EditorComponentVM<string>>(propertyAdapter, editorComponent);
 
             // act
             sut.MonitorEvents();

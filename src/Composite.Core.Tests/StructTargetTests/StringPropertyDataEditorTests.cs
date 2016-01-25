@@ -13,11 +13,11 @@ namespace Composite.Core.Tests.StructTargetTests
         [Test]
         public void ReadonlyStateIsAssignedToComponent()
         {
-            var editorComponent = new EditorComponent<string>();
+            var editorComponent = new EditorComponentVM<string>();
             var propertyAdapter = EditableStructMetadata.ReadonlyTextProperty;
 
             // act
-            var sut = new ScalarPropertyDataEditor<EditableStruct, string, EditorComponent<string>>(propertyAdapter, editorComponent);
+            var sut = new ScalarPropertyDataEditor<EditableStruct, string, EditorComponentVM<string>>(propertyAdapter, editorComponent);
 
             // assert
             sut.Component.IsReadOnly.Should().Be(EditableStructMetadata.ReadonlyTextProperty.IsReadOnly);
@@ -27,10 +27,10 @@ namespace Composite.Core.Tests.StructTargetTests
         public void ValueUpdateChangeReportedOnTargetUpdate()
         {
             var target = new EditableStruct {Text = "Initial"};
-            var editorComponent = new EditorComponent<string>();
+            var editorComponent = new EditorComponentVM<string>();
             var propertyAdapter = EditableStructMetadata.TextProperty;
 
-            var sut = new ScalarPropertyDataEditor<EditableStruct, string, EditorComponent<string>>(propertyAdapter,
+            var sut = new ScalarPropertyDataEditor<EditableStruct, string, EditorComponentVM<string>>(propertyAdapter,
                 editorComponent);
 
             // act
@@ -97,9 +97,9 @@ namespace Composite.Core.Tests.StructTargetTests
             const string updatedValue = "Updated";
 
             var target = new EditableStruct {Text = "Initial"};
-            var editorComponent = new EditorComponent<string>();
+            var editorComponent = new EditorComponentVM<string>();
             var propertyAdapter = EditableStructMetadata.TextProperty;
-            var sut = new ScalarPropertyDataEditor<EditableStruct, string, EditorComponent<string>>(propertyAdapter,
+            var sut = new ScalarPropertyDataEditor<EditableStruct, string, EditorComponentVM<string>>(propertyAdapter,
                 editorComponent);
 
             // act

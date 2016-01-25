@@ -19,7 +19,7 @@
         </Border>
     </ControlTemplate>
 
-    <DataTemplate DataType="{x:Type textEditor:TextEditorComponent}">
+    <DataTemplate DataType="{x:Type textEditor:TextEditorComponentVM}">
         <TextBox Text="{Binding Path=Value, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                  IsReadOnly="{Binding Path=IsReadOnly, Mode=OneTime}"
                  Validation.ErrorTemplate="{StaticResource ValidationTemplate}"/>
