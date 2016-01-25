@@ -13,10 +13,10 @@ namespace Composite.Core.Tests.StructTargetTests
         [Test]
         public void EditorsCollectionContainsEditorForEachOfCollectionItems()
         {
-            var sut = new ListDataEditor<ContainerStruct,ContainerStructValiditiState,EditableStruct,ValidationState>
+            var sut = new ListDataEditor<ContainerStruct, ContainerStructValiditiState, EditableStruct, ValidationState>
                 (ItemEditorFactory,
-                ContainerStructMetadata.ItemsProperty,
-                GetItemValidityState);
+                    ContainerStructMetadata.ItemsProperty,
+                    GetItemValidityState);
 
             var implicitSut = sut as IDataEditor<ContainerStruct>;
 
@@ -40,8 +40,8 @@ namespace Composite.Core.Tests.StructTargetTests
         {
             var sut = new ListDataEditor<ContainerStruct, ContainerStructValiditiState, EditableStruct, ValidationState>
                 (ItemEditorFactory,
-                ContainerStructMetadata.ItemsProperty,
-                GetItemValidityState);
+                    ContainerStructMetadata.ItemsProperty,
+                    GetItemValidityState);
 
             var implicitSut = sut as IDataEditor<ContainerStruct>;
 
@@ -73,8 +73,8 @@ namespace Composite.Core.Tests.StructTargetTests
         {
             var sut = new ListDataEditor<ContainerStruct, ContainerStructValiditiState, EditableStruct, ValidationState>
                 (ItemEditorFactory,
-                ContainerStructMetadata.ItemsProperty,
-                GetItemValidityState);
+                    ContainerStructMetadata.ItemsProperty,
+                    GetItemValidityState);
 
             var implicitSut = sut as IDataEditor<ContainerStruct>;
 
@@ -100,8 +100,8 @@ namespace Composite.Core.Tests.StructTargetTests
         {
             var sut = new ListDataEditor<ContainerStruct, ContainerStructValiditiState, EditableStruct, ValidationState>
                 (ItemEditorFactory,
-                ContainerStructMetadata.ItemsProperty,
-                GetItemValidityState);
+                    ContainerStructMetadata.ItemsProperty,
+                    GetItemValidityState);
 
             var implicitSut = sut as IDataEditor<ContainerStruct>;
 
@@ -115,7 +115,7 @@ namespace Composite.Core.Tests.StructTargetTests
 
             implicitSut.MonitorEvents();
 
-            sut.ItemEditors[0].EditableTarget = new EditableStruct{Text = "B"};
+            sut.ItemEditors[0].EditableTarget = new EditableStruct {Text = "B"};
             sut.ItemEditors[0].TargetUpdated += Raise.EventWith(EventArgs.Empty);
 
             // assert
@@ -130,10 +130,11 @@ namespace Composite.Core.Tests.StructTargetTests
         {
             var sut = new ListDataEditor<ContainerStruct, ContainerStructValiditiState, EditableStruct, ValidationState>
                 (ItemValidatedEditorFactory,
-                ContainerStructMetadata.ItemsProperty,
-                GetItemValidityState);
+                    ContainerStructMetadata.ItemsProperty,
+                    GetItemValidityState);
 
-            var implicitSut = sut as IValidatedDataEditor<ContainerStruct, ContainerStructValiditiState>;
+            var containerEditor = sut as IDataEditor<ContainerStruct>;
+            var implicitSut = sut as IValidatedDataEditor<ContainerStructValiditiState>;
 
             var target = new ContainerStruct(new[]
             {
@@ -141,13 +142,16 @@ namespace Composite.Core.Tests.StructTargetTests
             });
 
             // act
-            implicitSut.EditableTarget = target;
+            containerEditor.EditableTarget = target;
 
-            var itemEditor = sut.ItemEditors[0] as IValidatedDataEditor<EditableStruct, ValidationState>;
+            var itemEditor = sut.ItemEditors[0] as IValidatedDataEditor<ValidationState>;
             itemEditor.Should().NotBeNull();
 
-            itemEditor.EditableTarget = new EditableStruct{Text = "B"};
-            itemEditor.TargetUpdated += Raise.EventWith(EventArgs.Empty);
+            var structEditor = itemEditor as IDataEditor<EditableStruct>;
+            structEditor.Should().NotBeNull();
+
+            structEditor.EditableTarget = new EditableStruct {Text = "B"};
+            structEditor.TargetUpdated += Raise.EventWith(EventArgs.Empty);
 
             // assert
             target.Items[0].Text.Should().Be("B");
@@ -159,12 +163,12 @@ namespace Composite.Core.Tests.StructTargetTests
             itemEditor.Received().UpdateValidationState(ValidationState.Valid);
         }
 
-        private ValidationState GetItemValidityState(EditableStruct item, ContainerStructValiditiState state)
+        private static ValidationState GetItemValidityState(EditableStruct item, ContainerStructValiditiState state)
         {
             return state.GetStateFor(item);
         }
 
-        private IDataEditor<EditableStruct> ItemEditorFactory(EditableStruct arg)
+        private static IDataEditor<EditableStruct> ItemEditorFactory(EditableStruct arg)
         {
             var pseudoEditor = Substitute.For<IDataEditor<EditableStruct>>();
             pseudoEditor.EditableTarget = arg;
@@ -172,9 +176,9 @@ namespace Composite.Core.Tests.StructTargetTests
             return pseudoEditor;
         }
 
-        private IDataEditor<EditableStruct> ItemValidatedEditorFactory(EditableStruct arg)
+        private static IDataEditor<EditableStruct> ItemValidatedEditorFactory(EditableStruct arg)
         {
-            var pseudoEditor = Substitute.For<IValidatedDataEditor<EditableStruct, ValidationState>>();
+            var pseudoEditor = Substitute.For<IDataEditor<EditableStruct>, IValidatedDataEditor<ValidationState>>();
             pseudoEditor.EditableTarget = arg;
 
             return pseudoEditor;

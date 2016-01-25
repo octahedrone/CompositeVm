@@ -3,7 +3,7 @@ using Composite.Core.TypeChecks;
 
 namespace Composite.Core.PropertyEditors
 {
-    public class PropertyDataEditor<TData, TValue, TValidationState> : IValidatedDataEditor<TData, TValidationState>
+    public class PropertyDataEditor<TData, TValue, TValidationState> : IDataEditor<TData>, IValidatedDataEditor<TValidationState>
     {
         private static readonly INullableCheck<TData> TargetNullCheck = ValueChecks.GetNullableCheck<TData>();
 

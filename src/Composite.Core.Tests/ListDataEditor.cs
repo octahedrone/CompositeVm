@@ -7,7 +7,7 @@ using Composite.Core.TypeChecks;
 namespace Composite.Core.Tests
 {
     public class ListDataEditor<TData, TValidationState, TItem, TItemValidationState>
-        : IValidatedDataEditor<TData, TValidationState>
+        : IDataEditor<TData>, IValidatedDataEditor<TValidationState>
     {
         private static readonly INullableCheck<TData> TargetNullCheck = ValueChecks.GetNullableCheck<TData>();
         private static readonly INullableCheck<TValidationState> ValidityNullCheck = ValueChecks.GetNullableCheck<TValidationState>();
@@ -86,33 +86,38 @@ namespace Composite.Core.Tests
 
         public event EventHandler<EventArgs> TargetUpdated;
 
-        void IValidatedDataEditor<TData, TValidationState>.UpdateValidationState(TValidationState state)
+        void IValidatedDataEditor<TValidationState>.UpdateValidationState(TValidationState state)
         {
             if (ValidityNullCheck.IsNull(state))
             {
-                ((IValidatedDataEditor<TData, TValidationState>) this).ClearValidationState();
+                ((IValidatedDataEditor<TValidationState>) this).ClearValidationState();
 
                 return;
             }
 
-            foreach (var itemEditor in ItemEditors.OfType<IValidatedDataEditor<TItem, TItemValidationState>>())
+            foreach (var itemEditor in ItemEditors)
             {
+                var validatedItemEditor = itemEditor as IValidatedDataEditor<TItemValidationState>;
+                
+                if (validatedItemEditor == null)
+                    continue;
+
                 var itemValidityState = _itemValidityRetriever(itemEditor.EditableTarget, state);
 
                 if (ItemValidityNullCheck.IsNull(itemValidityState))
                 {
-                    itemEditor.ClearValidationState();
+                    validatedItemEditor.ClearValidationState();
                 }
                 else
                 {
-                    itemEditor.UpdateValidationState(itemValidityState);
+                    validatedItemEditor.UpdateValidationState(itemValidityState);
                 }
             }
         }
 
-        void IValidatedDataEditor<TData, TValidationState>.ClearValidationState()
+        void IValidatedDataEditor<TValidationState>.ClearValidationState()
         {
-            foreach (var itemEditor in ItemEditors.OfType<IValidatedDataEditor<TItem, TItemValidationState>>())
+            foreach (var itemEditor in ItemEditors.OfType<IValidatedDataEditor<TItemValidationState>>())
             {
                 itemEditor.ClearValidationState();
             }

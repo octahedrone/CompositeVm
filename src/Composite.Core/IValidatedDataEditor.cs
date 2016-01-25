@@ -1,6 +1,6 @@
 ﻿namespace Composite.Core
 {
-    public interface IValidatedDataEditor<TData, in TValidationState> : IDataEditor<TData>
+    public interface IValidatedDataEditor<in TValidationState>
     {
         void UpdateValidationState(TValidationState state);
 

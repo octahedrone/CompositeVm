@@ -66,7 +66,7 @@ namespace Composite.Core
             editor.EditableTarget = _editableTarget;
 
             // update validation state
-            var validatedEditor = editor as IValidatedDataEditor<TData, TValidationResult>;
+            var validatedEditor = editor as IValidatedDataEditor<TValidationResult>;
 
             if (validatedEditor != null)
             {
@@ -125,21 +125,21 @@ namespace Composite.Core
 
             if (ValidationNullCheck.IsNull(ValidationState))
             {
-                foreach (var validatedEditor in _editors.OfType<IValidatedDataEditor<TData, TValidationResult>>())
+                foreach (var validatedEditor in _editors.OfType<IValidatedDataEditor<TValidationResult>>())
                 {
                     validatedEditor.ClearValidationState();
                 }
             }
             else
             {
-                foreach (var validatedEditor in _editors.OfType<IValidatedDataEditor<TData, TValidationResult>>())
+                foreach (var validatedEditor in _editors.OfType<IValidatedDataEditor<TValidationResult>>())
                 {
                     validatedEditor.UpdateValidationState(ValidationState);
                 }
             }
         }
 
-        private void UpdateEditorValidityState(IValidatedDataEditor<TData, TValidationResult> validatedEditor)
+        private void UpdateEditorValidityState(IValidatedDataEditor<TValidationResult> validatedEditor)
         {
             if (ValidationNullCheck.IsNull(ValidationState))
             {
