@@ -13,7 +13,9 @@ namespace Composite.Core.PropertyEditors
 
         private TData _editableTarget;
 
-        public PropertyDataEditor(IPropertyAdapter<TData, TValue> propertyAdapter, IEditorComponent<TValue> component, Func<string, TValidationState, string> propertyErrorProvider)
+        public PropertyDataEditor(IPropertyAdapter<TData, TValue> propertyAdapter,
+            IEditorComponent<TValue> component,
+            Func<string, TValidationState, string> propertyErrorProvider)
         {
             if (propertyAdapter == null) throw new ArgumentNullException("propertyAdapter");
             if (component == null) throw new ArgumentNullException("component");

@@ -25,6 +25,7 @@
     <Compile Include="PropertyAdapters\ExpressionTools.cs" />
     <Compile Include="PropertyAdapters\ValueTypeGenericPropertyAdapter.cs" />
     <Compile Include="PropertyEditors\EditorComponent.cs" />
+    <Compile Include="PropertyEditors\IBrowserComponent.cs" />
     <Compile Include="PropertyEditors\IEditorComponent.cs" />
     <Compile Include="PropertyEditors\PropertyDataEditor.cs" />
     <Compile Include="TypeChecks\INullableCheck.cs" />

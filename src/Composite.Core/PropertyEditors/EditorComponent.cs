@@ -64,12 +64,12 @@ namespace Composite.Core.PropertyEditors
             IsReadOnly = readOnly;
         }
 
-        TValue IEditorComponent<TValue>.GetValue()
+        TValue IBrowserComponent<TValue>.GetValue()
         {
             return _value;
         }
 
-        void IEditorComponent<TValue>.SetValue(TValue value)
+        void IBrowserComponent<TValue>.SetValue(TValue value)
         {
             if (_valueComparer.Equals(_value, value))
             {
